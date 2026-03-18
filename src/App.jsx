@@ -64,6 +64,13 @@ function App() {
         <p className="text-center text-gray-500 mb-6 text-sm">
           Em menos de 1 minuto você verá onde está perdendo dinheiro
         </p>
+        <a
+          href="/modelo-financeiro.xlsx"
+          download
+          className="text-sm underline text-blue-600"
+        >
+          Não tem planilha? Baixar modelo
+        </a>
 
         <input
           type="file"
