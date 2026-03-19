@@ -210,7 +210,7 @@ function App() {
               </div>
             </div>
             <div className="text-center">
-              <a href="/modelo-financeiro.xlsx" download className="text-slate-500 hover:text-emerald-400 transition-colors text-sm underline underline-offset-4 decoration-slate-800">
+              <a href="/Planilha-modelo.xlsx" download className="text-slate-500 hover:text-emerald-400 transition-colors text-sm underline underline-offset-4 decoration-slate-800">
                 Não tem planilha? Baixe nosso modelo estratégico gratuito
               </a>
             </div>
