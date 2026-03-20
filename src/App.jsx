@@ -229,7 +229,7 @@ function App() {
 
             {/* SCORE & IMPACTO */}
             <div className="grid md:grid-cols-3 gap-6">
-              <div className="md:col-span-2 bg-gradient-to-br from-slate-900 to-slate-800 border border-slate-700/50 p-8 rounded-3xl shadow-2xl relative overflow-hidden group">
+              <div className="md:col-span-3 bg-gradient-to-br from-slate-900 to-slate-800 border border-slate-700/50 p-8 rounded-3xl shadow-2xl relative overflow-hidden group">
                 <div className="absolute top-0 right-0 p-8 opacity-5 group-hover:opacity-10 transition-opacity">
                   <Clock size={120} />
                 </div>
@@ -245,7 +245,7 @@ function App() {
                 </div>
               </div>
 
-              <div className="bg-red-500/5 border border-red-500/20 p-8 rounded-3xl flex flex-col justify-center items-center text-center">
+              {/* <div className="bg-red-500/5 border border-red-500/20 p-8 rounded-3xl flex flex-col justify-center items-center text-center">
                 <ArrowDownCircle size={40} className="text-red-500/50 mb-4" />
                 <p className="text-red-200/40 text-[10px] font-bold uppercase tracking-widest mb-2">Perda em 10 anos</p>
                 <p className="text-red-500 text-3xl font-black mb-2">
@@ -254,7 +254,7 @@ function App() {
                 <p className="text-slate-500 text-[10px] leading-tight">
                   Valor estimado de desperdício se nada for feito hoje.
                 </p>
-              </div>
+              </div> */}
             </div>
 
             {/* DIAGNÓSTICO RÁPIDO */}
@@ -326,6 +326,54 @@ function App() {
                         borderRadius: 8
                       }]
                     }} options={{ maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { grid: { color: '#1e293b' }, ticks: { color: '#94a3b8' } }, x: { ticks: { color: '#94a3b8' } } } }} /></div>
+                  </div>
+                </div>
+
+                {/* NOVO: PROJEÇÃO DE FUTURO */}
+                <div className="grid md:grid-cols-2 gap-6">
+
+                  <div className="bg-emerald-500/5 border border-emerald-500/20 p-6 rounded-2xl">
+                    <p className="text-emerald-300 text-xs uppercase tracking-widest mb-2">
+                      Projeção em 10 anos
+                    </p>
+                    <p className="text-emerald-400 text-2xl font-black">
+                      R$ {result.projections.projectedWealth.toLocaleString("pt-BR")}
+                    </p>
+                    <p className="text-slate-500 text-xs mt-2">
+                      Considerando investimento mensal do valor economizado.
+                    </p>
+                  </div>
+
+                  <div className="bg-amber-500/5 border border-amber-500/20 p-6 rounded-2xl">
+                    <p className="text-amber-300 text-xs uppercase tracking-widest mb-2">
+                      Reserva de emergência
+                    </p>
+                    <p className="text-amber-400 text-2xl font-black">
+                      R$ {result.projections.emergencyReserve.toLocaleString("pt-BR")}
+                    </p>
+                    <p className="text-slate-500 text-xs mt-2">
+                      Tempo estimado: {result.projections.monthsToReserve} meses
+                    </p>
+                  </div>
+
+                </div>
+
+                {/* NOVO: OPORTUNIDADES DE ECONOMIA */}
+                <div className="bg-slate-900/40 border border-slate-800 p-6 rounded-2xl">
+                  <h3 className="text-white font-bold mb-4 flex items-center gap-2">
+                    <Zap className="text-emerald-500" size={18} />
+                    Oportunidades rápidas de economia
+                  </h3>
+
+                  <div className="space-y-2">
+                    {result.categoryData.slice(0, 3).map((cat, i) => (
+                      <div key={i} className="flex justify-between text-sm">
+                        <span className="text-slate-300">{cat.name}</span>
+                        <span className="text-emerald-400 font-bold">
+                          R$ {(cat.value * 0.15).toLocaleString("pt-BR")}
+                        </span>
+                      </div>
+                    ))}
                   </div>
                 </div>
 
