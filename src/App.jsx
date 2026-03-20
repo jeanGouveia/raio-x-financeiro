@@ -282,7 +282,7 @@ function App() {
                     <span className="text-slate-500 line-through text-sm mb-1">De R$ 150,00</span>
                     <span className="text-6xl font-black text-white tracking-tighter">R$ 49,90</span>
                     <div className="mt-4 px-4 py-1 bg-emerald-500/10 rounded-full">
-                      <p className="text-emerald-400 text-xs font-bold italic">Economia imediata sugerida: R$ {result.projections.savingPotential}/mês</p>
+                      <p className="text-emerald-400 text-xs font-bold italic">Economia imediata sugerida na sua planilha: R$ {result.projections.savingPotential}/mês</p>
                     </div>
                   </div>
 
