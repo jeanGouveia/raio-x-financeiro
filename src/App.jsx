@@ -279,8 +279,8 @@ function App() {
                   </p>
 
                   <div className="flex flex-col items-center mb-10">
-                    <span className="text-slate-500 line-through text-sm mb-1">De R$ 197,00</span>
-                    <span className="text-6xl font-black text-white tracking-tighter">R$ 98,00</span>
+                    <span className="text-slate-500 line-through text-sm mb-1">De R$ 150,00</span>
+                    <span className="text-6xl font-black text-white tracking-tighter">R$ 49,90</span>
                     <div className="mt-4 px-4 py-1 bg-emerald-500/10 rounded-full">
                       <p className="text-emerald-400 text-xs font-bold italic">Economia imediata sugerida: R$ {result.projections.savingPotential}/mês</p>
                     </div>
