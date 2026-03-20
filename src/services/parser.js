@@ -12,7 +12,7 @@ export async function parseExcel(file) {
       header: 1,          // retorna arrays simples [val1, val2, ...]
       defval: "",         // células vazias viram ""
       blankrows: true,    // não remove linhas em branco
-      raw: false          // tenta converter datas e números corretamente
+      raw: true          // tenta converter datas e números corretamente
     });
 
     // Procura a linha do cabeçalho real (DATA, TIPO, VALOR, CATEGORIA)
@@ -104,15 +104,24 @@ function findColumn(headers, keywords) {
 
 function cleanValue(val) {
   if (val == null) return 0;
-  if (typeof val === "number") return val;
 
-  // Trata R$ 2.500,00 → 2500
-  let str = String(val)
-    .replace(/R\$/g, "")
-    .replace(/\s/g, "")
-    .replace(/\./g, "")     // remove milhar
-    .replace(",", ".");     // vírgula → ponto
+  // Se já for número, retorna direto
+  if (typeof val === "number") {
+    return val;
+  }
+
+  let str = String(val).trim();
+
+  // Remove R$ e espaços
+  str = str.replace(/R\$/g, "").replace(/\s/g, "");
+
+  // Se tiver vírgula (formato brasileiro)
+  if (str.includes(",")) {
+    str = str.replace(/\./g, ""); // remove milhar
+    str = str.replace(",", ".");  // decimal
+  }
 
   const num = parseFloat(str);
+
   return isNaN(num) ? 0 : num;
 }
