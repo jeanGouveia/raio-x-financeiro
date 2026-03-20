@@ -358,6 +358,88 @@ function App() {
 
                 </div>
 
+                {/* NOVO: EVOLUÇÃO FINANCEIRA */}
+                <div className="bg-slate-900/40 border border-slate-800 p-6 rounded-2xl">
+                  <h3 className="text-white font-bold mb-4 flex items-center gap-2">
+                    <TrendingUp className="text-emerald-500" size={18} />
+                    Evolução do seu dinheiro (12 meses)
+                  </h3>
+
+                  <div className="h-64">
+                    <Bar
+                      data={{
+                        labels: Array.from({ length: 12 }, (_, i) => `Mês ${i + 1}`),
+                        datasets: [
+                          {
+                            label: "Acumulado",
+                            data: result.projections.evolution12Months,
+                            backgroundColor: "#10b981",
+                            borderRadius: 6
+                          }
+                        ]
+                      }}
+                      options={{
+                        maintainAspectRatio: false,
+                        plugins: {
+                          legend: { display: false }
+                        },
+                        scales: {
+                          y: {
+                            ticks: { color: "#94a3b8" },
+                            grid: { color: "#1e293b" }
+                          },
+                          x: {
+                            ticks: { color: "#94a3b8" }
+                          }
+                        }
+                      }}
+                    />
+                  </div>
+
+                  <p className="text-slate-500 text-xs mt-4">
+                    Considerando que você invista o valor economizado todo mês.
+                  </p>
+                </div>
+
+                {/* NOVO: NÍVEL DE RISCO */}
+                <div className="bg-slate-900/40 border border-slate-800 p-6 rounded-2xl">
+                  <h3 className="text-white font-bold mb-4 flex items-center gap-2">
+                    <AlertTriangle className="text-red-500" size={18} />
+                    Nível de risco financeiro
+                  </h3>
+
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-slate-400 text-sm">Situação atual</span>
+                    <span className={`font-bold text-sm ${result.summary.balance <= 0
+                        ? "text-red-500"
+                        : result.summary.balance < result.summary.income * 0.1
+                          ? "text-amber-500"
+                          : "text-emerald-500"
+                      }`}>
+                      {result.summary.balance <= 0
+                        ? "Alto risco"
+                        : result.summary.balance < result.summary.income * 0.1
+                          ? "Médio risco"
+                          : "Baixo risco"}
+                    </span>
+                  </div>
+
+                  <div className="w-full bg-slate-800 rounded-full h-3 overflow-hidden">
+                    <div
+                      className={`h-full ${result.summary.balance <= 0
+                          ? "bg-red-500 w-full"
+                          : result.summary.balance < result.summary.income * 0.1
+                            ? "bg-amber-500 w-2/3"
+                            : "bg-emerald-500 w-1/3"
+                        }`}
+                    />
+                  </div>
+
+                  <p className="text-slate-500 text-xs mt-3">
+                    Baseado na sua capacidade de gerar sobra mensal.
+                  </p>
+                </div>
+
                 {/* NOVO: OPORTUNIDADES DE ECONOMIA */}
                 <div className="bg-slate-900/40 border border-slate-800 p-6 rounded-2xl">
                   <h3 className="text-white font-bold mb-4 flex items-center gap-2">
