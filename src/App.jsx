@@ -6,7 +6,6 @@ import { Pie, Bar } from "react-chartjs-2";
 import { jsPDF } from "jspdf";
 import autoTable from "jspdf-autotable";
 
-
 import {
   Download,
   ShieldCheck,
@@ -46,7 +45,11 @@ function App() {
       setAnimatedScore(0);
     } catch (error) {
       console.error(error);
-      alert("Erro ao processar a planilha. Verifique se as colunas 'valor', 'tipo' e 'categoria' estão presentes.");
+      alert(
+        "Erro ao processar a planilha.\n\n" +
+        "Verifique se existe uma tabela com as colunas:\n" +
+        "DATA / DIA | TIPO (Receita/Despesa) | VALOR | CATEGORIA"
+      );
     } finally {
       setLoading(false);
     }
@@ -73,38 +76,57 @@ function App() {
     return "text-emerald-500";
   };
 
+  // --- NOVA FUNÇÃO DE VERIFICAÇÃO REAL ---
+  const checkHotmartPayment = async () => {
+    const email = prompt("Digite o e-mail utilizado na compra da Hotmart:");
+    if (!email) return;
+
+    setLoading(true);
+    try {
+      // Faz a chamada para a API Route que você vai criar na Vercel
+      const response = await fetch(`/api/check-payment?email=${encodeURIComponent(email)}`);
+      const data = await response.json();
+
+      if (data.unlocked) {
+        localStorage.setItem("premiumUnlocked", "true");
+        setUnlocked(true);
+        alert("✅ Pagamento confirmado! Seu Raio-X Premium está liberado.");
+      } else {
+        alert("❌ Pagamento não encontrado ou ainda não processado pela Hotmart. Verifique o e-mail ou tente em alguns minutos.");
+      }
+    } catch (err) {
+      alert("Houve um erro técnico ao verificar seu acesso. Tente novamente em instantes.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const unlockPremium = () => {
-    // Aqui você integraria com seu link de pagamento (Hotmart/Kiwify)
-    // Para o MVP, simulamos o desbloqueio
-    localStorage.setItem("premiumUnlocked", "true");
-    setUnlocked(true);
+    const paymentLink = "https://pay.hotmart.com/Y105185205N";
+    window.open(paymentLink, "_blank");
+    alert("🔓 Após realizar o pagamento, volte aqui e clique em 'Já paguei – Desbloquear agora'");
   };
 
   const generatePDF = () => {
     if (!result) return;
-
     try {
       const doc = new jsPDF();
       const pageWidth = doc.internal.pageSize.getWidth();
       const pageHeight = doc.internal.pageSize.getHeight();
 
-      // --- PÁGINA 1: CAPA ---
       doc.setFillColor(15, 23, 42);
       doc.rect(0, 0, pageWidth, pageHeight, 'F');
       doc.setFillColor(16, 185, 129);
       doc.rect(0, 0, 5, pageHeight, 'F');
-
       doc.setTextColor(255, 255, 255);
       doc.setFont("helvetica", "bold");
       doc.setFontSize(32);
       doc.text("RAIO-X", 25, 60);
       doc.setTextColor(16, 185, 129);
       doc.text("FINANCEIRO PREMIUM", 25, 75);
-
       doc.setDrawColor(16, 185, 129);
       doc.setLineWidth(1);
       doc.line(25, 85, 100, 85);
-
       doc.setTextColor(148, 163, 184);
       doc.setFontSize(14);
       doc.setFont("helvetica", "normal");
@@ -112,13 +134,11 @@ function App() {
       doc.setFontSize(11);
       doc.text(`Gerado em: ${new Date().toLocaleDateString("pt-BR")}`, 25, 110);
 
-      // --- PÁGINA 2: DIAGNÓSTICO ---
       doc.addPage();
       doc.setTextColor(15, 23, 42);
       doc.setFontSize(22);
       doc.setFont("helvetica", "bold");
       doc.text("1. Resumo Executivo", 20, 30);
-
       doc.setFillColor(248, 250, 252);
       doc.roundedRect(20, 40, 170, 40, 3, 3, 'F');
       doc.setFontSize(12);
@@ -131,7 +151,6 @@ function App() {
       doc.setTextColor(15, 23, 42);
       doc.text(`Perfil: ${result.profile.name}`, 85, 65);
 
-      // Card de Impacto
       doc.setFillColor(254, 242, 242);
       doc.roundedRect(20, 90, 170, 45, 3, 3, 'F');
       doc.setTextColor(185, 28, 28);
@@ -144,7 +163,6 @@ function App() {
       doc.setFontSize(16);
       doc.text("2. Distribuição de Gastos", 20, 155);
 
-      // CHAMADA DA TABELA USANDO A FUNÇÃO IMPORTADA DIRETAMENTE
       autoTable(doc, {
         startY: 165,
         head: [['Categoria', 'Valor Atual', '%', 'Economia Alvo (15%)']],
@@ -159,12 +177,10 @@ function App() {
         margin: { left: 20, right: 20 },
       });
 
-      // --- PÁGINA 3: PLANO DE AÇÃO ---
       doc.addPage();
       doc.setFontSize(22);
       doc.setFont("helvetica", "bold");
       doc.text("3. Plano Estratégico de 30 Dias", 20, 30);
-
       let yPos = 50;
       result.actionPlan.forEach((step, i) => {
         doc.setFillColor(16, 185, 129);
@@ -179,15 +195,13 @@ function App() {
       doc.save(`Consultoria_Financeira_Premium.pdf`);
     } catch (err) {
       console.error("Erro ao gerar PDF:", err);
-      alert("Houve um erro técnico ao gerar o PDF. Verifique o console.");
+      alert("Erro ao gerar o PDF.");
     }
   };
 
   return (
     <div className="min-h-screen bg-[#0f172a] text-slate-200 selection:bg-emerald-500/30 p-4 md:p-8 font-sans">
       <div className="max-w-4xl mx-auto">
-
-        {/* HEADER */}
         <header className="text-center mb-12 animate-in fade-in duration-1000">
           <div className="inline-block px-4 py-1.5 mb-6 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-bold uppercase tracking-widest">
             Inteligência Financeira 2.0
@@ -226,8 +240,6 @@ function App() {
 
         {result && (
           <div className="space-y-8 animate-in zoom-in-95 duration-500">
-
-            {/* SCORE & IMPACTO */}
             <div className="grid md:grid-cols-3 gap-6">
               <div className="md:col-span-3 bg-gradient-to-br from-slate-900 to-slate-800 border border-slate-700/50 p-8 rounded-3xl shadow-2xl relative overflow-hidden group">
                 <div className="absolute top-0 right-0 p-8 opacity-5 group-hover:opacity-10 transition-opacity">
@@ -244,20 +256,8 @@ function App() {
                   <p className="text-slate-400 text-sm mt-1 leading-relaxed">{result.benchmark}</p>
                 </div>
               </div>
-
-              {/* <div className="bg-red-500/5 border border-red-500/20 p-8 rounded-3xl flex flex-col justify-center items-center text-center">
-                <ArrowDownCircle size={40} className="text-red-500/50 mb-4" />
-                <p className="text-red-200/40 text-[10px] font-bold uppercase tracking-widest mb-2">Perda em 10 anos</p>
-                <p className="text-red-500 text-3xl font-black mb-2">
-                  - R$ {result.projections.loss10Years.toLocaleString('pt-BR')}
-                </p>
-                <p className="text-slate-500 text-[10px] leading-tight">
-                  Valor estimado de desperdício se nada for feito hoje.
-                </p>
-              </div> */}
             </div>
 
-            {/* DIAGNÓSTICO RÁPIDO */}
             <div className="bg-slate-900/40 border border-slate-800 p-6 rounded-2xl flex items-center gap-4 shadow-inner">
               <div className="p-3 bg-amber-500/10 rounded-xl">
                 <AlertTriangle className="text-amber-500" size={24} />
@@ -277,22 +277,28 @@ function App() {
                   <p className="text-slate-400 mb-8 max-w-sm mx-auto">
                     Acesse o plano detalhado de 30 dias e o relatório PDF de consultoria completa.
                   </p>
-
                   <div className="flex flex-col items-center mb-10">
-                    <span className="text-slate-500 line-through text-sm mb-1">De R$ 150,00</span>
-                    <span className="text-6xl font-black text-white tracking-tighter">R$ 49,90</span>
+                    <span className="text-slate-500 line-through text-sm mb-1">De R$ 200,00</span>
+                    <span className="text-6xl font-black text-white tracking-tighter">R$ 97,00</span>
                     <div className="mt-4 px-4 py-1 bg-emerald-500/10 rounded-full">
-                      <p className="text-emerald-400 text-xs font-bold italic">Economia imediata sugerida na sua planilha: R$ {result.projections.savingPotential}/mês</p>
+                      <p className="text-emerald-400 text-xs font-bold italic">Economia imediata sugerida: R$ {result.projections.savingPotential}/mês</p>
                     </div>
                   </div>
-
                   <button
                     onClick={unlockPremium}
-                    className="w-full md:w-auto px-16 py-5 bg-emerald-500 hover:bg-emerald-400 text-slate-950 rounded-2xl text-xl font-black transition-all hover:scale-[1.02] active:scale-95 shadow-[0_20px_40px_-15px_rgba(16,185,129,0.4)]"
+                    className="w-full md:w-auto px-16 py-5 bg-emerald-500 hover:bg-emerald-400 text-slate-950 rounded-2xl text-xl font-black transition-all hover:scale-[1.02] shadow-[0_20px_40px_-15px_rgba(16,185,129,0.4)]"
                   >
-                    ACESSAR CONSULTORIA AGORA
+                    ACESSAR CONSULTORIA AGORA - R$ 97
                   </button>
                   <p className="text-[10px] text-slate-600 mt-8 tracking-[0.2em] uppercase">Pagamento único • Acesso Vitalício</p>
+                </div>
+                <div className="mt-6 text-center">
+                  <button
+                    onClick={checkHotmartPayment}
+                    className="text-emerald-400 hover:text-emerald-300 underline text-sm"
+                  >
+                    Já paguei → Desbloquear agora
+                  </button>
                 </div>
               </div>
             )}
@@ -329,133 +335,26 @@ function App() {
                   </div>
                 </div>
 
-                {/* NOVO: PROJEÇÃO DE FUTURO */}
                 <div className="grid md:grid-cols-2 gap-6">
-
                   <div className="bg-emerald-500/5 border border-emerald-500/20 p-6 rounded-2xl">
-                    <p className="text-emerald-300 text-xs uppercase tracking-widest mb-2">
-                      Projeção em 10 anos
-                    </p>
-                    <p className="text-emerald-400 text-2xl font-black">
-                      R$ {result.projections.projectedWealth.toLocaleString("pt-BR")}
-                    </p>
-                    <p className="text-slate-500 text-xs mt-2">
-                      Considerando investimento mensal do valor economizado.
-                    </p>
+                    <p className="text-emerald-300 text-xs uppercase tracking-widest mb-2">Projeção em 10 anos</p>
+                    <p className="text-emerald-400 text-2xl font-black">R$ {result.projections.projectedWealth.toLocaleString("pt-BR")}</p>
+                    <p className="text-slate-500 text-xs mt-2">Considerando investimento mensal do valor economizado.</p>
                   </div>
-
                   <div className="bg-amber-500/5 border border-amber-500/20 p-6 rounded-2xl">
-                    <p className="text-amber-300 text-xs uppercase tracking-widest mb-2">
-                      Reserva de emergência
-                    </p>
-                    <p className="text-amber-400 text-2xl font-black">
-                      R$ {result.projections.emergencyReserve.toLocaleString("pt-BR")}
-                    </p>
-                    <p className="text-slate-500 text-xs mt-2">
-                      Tempo estimado: {result.projections.monthsToReserve} meses
-                    </p>
+                    <p className="text-amber-300 text-xs uppercase tracking-widest mb-2">Reserva de emergência</p>
+                    <p className="text-amber-400 text-2xl font-black">R$ {result.projections.emergencyReserve.toLocaleString("pt-BR")}</p>
+                    <p className="text-slate-500 text-xs mt-2">Tempo estimado: {result.projections.monthsToReserve} meses</p>
                   </div>
-
                 </div>
 
-                {/* NOVO: EVOLUÇÃO FINANCEIRA */}
                 <div className="bg-slate-900/40 border border-slate-800 p-6 rounded-2xl">
-                  <h3 className="text-white font-bold mb-4 flex items-center gap-2">
-                    <TrendingUp className="text-emerald-500" size={18} />
-                    Evolução do seu dinheiro (12 meses)
-                  </h3>
-
+                  <h3 className="text-white font-bold mb-4 flex items-center gap-2"><TrendingUp className="text-emerald-500" size={18} /> Evolução (12 meses)</h3>
                   <div className="h-64">
-                    <Bar
-                      data={{
+                    <Bar data={{
                         labels: Array.from({ length: 12 }, (_, i) => `Mês ${i + 1}`),
-                        datasets: [
-                          {
-                            label: "Acumulado",
-                            data: result.projections.evolution12Months,
-                            backgroundColor: "#10b981",
-                            borderRadius: 6
-                          }
-                        ]
-                      }}
-                      options={{
-                        maintainAspectRatio: false,
-                        plugins: {
-                          legend: { display: false }
-                        },
-                        scales: {
-                          y: {
-                            ticks: { color: "#94a3b8" },
-                            grid: { color: "#1e293b" }
-                          },
-                          x: {
-                            ticks: { color: "#94a3b8" }
-                          }
-                        }
-                      }}
-                    />
-                  </div>
-
-                  <p className="text-slate-500 text-xs mt-4">
-                    Considerando que você invista o valor economizado todo mês.
-                  </p>
-                </div>
-
-                {/* NOVO: NÍVEL DE RISCO */}
-                <div className="bg-slate-900/40 border border-slate-800 p-6 rounded-2xl">
-                  <h3 className="text-white font-bold mb-4 flex items-center gap-2">
-                    <AlertTriangle className="text-red-500" size={18} />
-                    Nível de risco financeiro
-                  </h3>
-
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="text-slate-400 text-sm">Situação atual</span>
-                    <span className={`font-bold text-sm ${result.summary.balance <= 0
-                        ? "text-red-500"
-                        : result.summary.balance < result.summary.income * 0.1
-                          ? "text-amber-500"
-                          : "text-emerald-500"
-                      }`}>
-                      {result.summary.balance <= 0
-                        ? "Alto risco"
-                        : result.summary.balance < result.summary.income * 0.1
-                          ? "Médio risco"
-                          : "Baixo risco"}
-                    </span>
-                  </div>
-
-                  <div className="w-full bg-slate-800 rounded-full h-3 overflow-hidden">
-                    <div
-                      className={`h-full ${result.summary.balance <= 0
-                          ? "bg-red-500 w-full"
-                          : result.summary.balance < result.summary.income * 0.1
-                            ? "bg-amber-500 w-2/3"
-                            : "bg-emerald-500 w-1/3"
-                        }`}
-                    />
-                  </div>
-
-                  <p className="text-slate-500 text-xs mt-3">
-                    Baseado na sua capacidade de gerar sobra mensal.
-                  </p>
-                </div>
-
-                {/* NOVO: OPORTUNIDADES DE ECONOMIA */}
-                <div className="bg-slate-900/40 border border-slate-800 p-6 rounded-2xl">
-                  <h3 className="text-white font-bold mb-4 flex items-center gap-2">
-                    <Zap className="text-emerald-500" size={18} />
-                    Oportunidades rápidas de economia
-                  </h3>
-
-                  <div className="space-y-2">
-                    {result.categoryData.slice(0, 3).map((cat, i) => (
-                      <div key={i} className="flex justify-between text-sm">
-                        <span className="text-slate-300">{cat.name}</span>
-                        <span className="text-emerald-400 font-bold">
-                          R$ {(cat.value * 0.15).toLocaleString("pt-BR")}
-                        </span>
-                      </div>
-                    ))}
+                        datasets: [{ label: "Acumulado", data: result.projections.evolution12Months, backgroundColor: "#10b981", borderRadius: 6 }]
+                    }} options={{ maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { ticks: { color: "#94a3b8" }, grid: { color: "#1e293b" } }, x: { ticks: { color: "#94a3b8" } } } }} />
                   </div>
                 </div>
 
@@ -474,7 +373,7 @@ function App() {
 
                 <button
                   onClick={generatePDF}
-                  className="w-full bg-white text-slate-950 py-6 rounded-2xl font-black text-xl flex items-center justify-center gap-3 hover:bg-slate-100 transition-all shadow-2xl active:scale-95"
+                  className="w-full bg-white text-slate-950 py-6 rounded-2xl font-black text-xl flex items-center justify-center gap-3 hover:bg-slate-100 shadow-2xl transition-all"
                 >
                   <Download size={24} /> BAIXAR CONSULTORIA EM PDF
                 </button>
