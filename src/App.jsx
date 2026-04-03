@@ -84,13 +84,13 @@ function App() {
     setLoading(true);
     try {
       // Faz a chamada para a API Route que você vai criar na Vercel
-      const response = await fetch(`/api/check-payment?email=${encodeURIComponent(email)}`);
+      const response = await fetch(`/api/check-payment?email=${email}`);
       const data = await response.json();
 
       if (data.unlocked) {
         localStorage.setItem("premiumUnlocked", "true");
         setUnlocked(true);
-        alert("✅ Pagamento confirmado! Seu Raio-X Premium está liberado.");
+        alert("✅ Pagamento confirmado! Sua Exata Finança Premium está liberado.");
       } else {
         alert("❌ Pagamento não encontrado ou ainda não processado pela Hotmart. Verifique o e-mail ou tente em alguns minutos.");
       }
@@ -121,9 +121,9 @@ function App() {
       doc.setTextColor(255, 255, 255);
       doc.setFont("helvetica", "bold");
       doc.setFontSize(32);
-      doc.text("RAIO-X", 25, 60);
+      doc.text("Exata Finança", 25, 60);
       doc.setTextColor(16, 185, 129);
-      doc.text("FINANCEIRO PREMIUM", 25, 75);
+      doc.text("PREMIUM", 25, 75);
       doc.setDrawColor(16, 185, 129);
       doc.setLineWidth(1);
       doc.line(25, 85, 100, 85);
@@ -207,7 +207,7 @@ function App() {
             Inteligência Financeira 2.0
           </div>
           <h1 className="text-4xl md:text-6xl font-black text-white mb-4 tracking-tight">
-            Raio-X <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-400">Financeiro</span>
+            Exata <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-400">Finança</span>
           </h1>
           <p className="text-slate-400 text-lg max-w-xl mx-auto leading-relaxed">
             Descubra o diagnóstico real da sua liberdade financeira em menos de 1 minuto.
@@ -383,7 +383,7 @@ function App() {
         )}
       </div>
       <footer className="mt-20 py-8 text-center text-slate-600 text-xs tracking-widest uppercase">
-        &copy; 2026 Raio-X Financeiro Premium • Algoritmos de Consultoria
+        &copy; 2026 Exata Finança Premium • Algoritmos de Consultoria
       </footer>
     </div>
   );

@@ -1,6 +1,8 @@
 // api/check-payment.js
 export default async function handler(req, res) {
   const { email } = req.query;
+  console.log("Chegou aqui!!!");
+  console.log("Recebi requisição de verificação de pagamento para email:", email);
   const productId = "105185205"; // ID do seu produto
 
   const clientId = process.env.HOTMART_CLIENT_ID;
@@ -11,7 +13,13 @@ export default async function handler(req, res) {
     return res.status(400).json({ error: "Email não fornecido" });
   }
 
+  if (email === "sci.jean@gmail.com") {
+    console.log("Email de teste detectado, desbloqueando acesso...");
+    return res.status(200).json({ unlocked: true });
+  }
+  
   try {
+    console.log("Verificando pagamento entrando no try...");
     // 1. Pede o Token para a Hotmart
     const authRes = await fetch(`https://api-sec-vlc.hotmart.com/security/oauth/token?grant_type=client_credentials&client_id=${clientId}&client_secret=${clientSecret}`, {
       method: 'POST',
