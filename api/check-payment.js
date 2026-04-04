@@ -1,7 +1,7 @@
 // api/check-payment.js
 export default async function handler(req, res) {
   const { email } = req.query;
-  const productId = "105185205"; // Verifique se este ID está idêntico ao da Hotmart
+  const productId = "7490815"; // Verifique se este ID está idêntico ao da Hotmart
 
   const clientId = process.env.HOTMART_CLIENT_ID;
   const clientSecret = process.env.HOTMART_CLIENT_SECRET;
