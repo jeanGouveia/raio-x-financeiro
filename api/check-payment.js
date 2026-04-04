@@ -1,26 +1,14 @@
 // api/check-payment.js
 export default async function handler(req, res) {
   const { email } = req.query;
-  console.log("Chegou aqui!!!");
-  console.log("Recebi requisição de verificação de pagamento para email:", email);
-  const productId = "105185205"; // ID do seu produto
+  const productId = "105185205"; // Verifique se este ID está idêntico ao da Hotmart
 
   const clientId = process.env.HOTMART_CLIENT_ID;
   const clientSecret = process.env.HOTMART_CLIENT_SECRET;
   const basicAuth = process.env.HOTMART_BASIC_AUTH;
 
-  if (!email) {
-    return res.status(400).json({ error: "Email não fornecido" });
-  }
-
-  if (email === "sci.jean@gmail.com") {
-    console.log("Email de teste detectado, desbloqueando acesso...");
-    return res.status(200).json({ unlocked: true });
-  }
-  
   try {
-    console.log("Verificando pagamento entrando no try...");
-    // 1. Pede o Token para a Hotmart
+    // 1. Autenticação
     const authRes = await fetch(`https://api-sec-vlc.hotmart.com/security/oauth/token?grant_type=client_credentials&client_id=${clientId}&client_secret=${clientSecret}`, {
       method: 'POST',
       headers: { 'Authorization': `Basic ${basicAuth}` }
@@ -29,10 +17,13 @@ export default async function handler(req, res) {
     const authData = await authRes.json();
 
     if (!authData.access_token) {
-      return res.status(500).json({ error: "Falha na autenticação Hotmart. Verifique as variáveis na Vercel." });
+      return res.status(500).json({ 
+        error: "Erro de Autenticação", 
+        detalhes: authData 
+      });
     }
 
-    // 2. Consulta a venda
+    // 2. Consulta de Vendas
     const url = `https://developers.hotmart.com/payments/api/v1/sales/history?transaction_status=APPROVED&buyer_email=${encodeURIComponent(email)}&product_id=${productId}`;
     
     const salesRes = await fetch(url, {
@@ -45,13 +36,22 @@ export default async function handler(req, res) {
 
     const salesData = await salesRes.json();
 
-    if (salesData.items && salesData.items.length > 0) {
-      return res.status(200).json({ unlocked: true });
+    // --- LOG DE DEPURAÇÃO PARA O NAVEGADOR ---
+    // Se não encontrar a venda, vamos devolver tudo que a Hotmart disse
+    if (!salesData.items || salesData.items.length === 0) {
+      return res.status(200).json({ 
+        unlocked: false, 
+        debug: {
+          mensagem: "Nenhuma venda APPROVED encontrada para este e-mail e produto.",
+          total_itens_retornados: salesData.page_info?.total_results || 0,
+          resposta_da_hotmart: salesData // Aqui veremos se o ID do produto ou e-mail bateu
+        }
+      });
     }
     
-    return res.status(200).json({ unlocked: false });
+    return res.status(200).json({ unlocked: true });
 
   } catch (error) {
-    return res.status(500).json({ error: "Erro interno no servidor" });
+    return res.status(500).json({ error: "Erro interno", mensagem: error.message });
   }
 }
