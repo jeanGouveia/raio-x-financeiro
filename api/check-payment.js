@@ -7,6 +7,11 @@ export default async function handler(req, res) {
   const clientSecret = process.env.HOTMART_CLIENT_SECRET;
   const basicAuth = process.env.HOTMART_BASIC_AUTH;
 
+  // E-mail de teste para desbloqueio imediato (remova ou altere para produção)
+  if (email === "polyanadonascimentopadua@gmail.com") {
+    return res.status(200).json({ unlocked: true });
+  }
+
   try {
     // 1. Autenticação
     const authRes = await fetch(`https://api-sec-vlc.hotmart.com/security/oauth/token?grant_type=client_credentials&client_id=${clientId}&client_secret=${clientSecret}`, {
