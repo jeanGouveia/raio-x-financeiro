@@ -952,10 +952,10 @@ export default function App() {
             {!unlocked && (
               <div className="flex flex-col items-center gap-4 py-4">
                 <Link
-                  to="/precos"
+                  to="https://pay.hotmart.com/Y105310131F?off=jvdmfsq3&bid=1775957680382"
                   className="inline-block bg-emerald-500 hover:bg-emerald-600 text-black font-black text-xl px-16 py-5 rounded-2xl transition-all w-full md:w-auto text-center"
                 >
-                  Ver Planos e Preços
+                    Quero acesso completo por 30 dias!
                 </Link>
                 <button
                   onClick={checkHotmartPayment}

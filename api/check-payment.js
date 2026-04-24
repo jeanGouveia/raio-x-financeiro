@@ -12,7 +12,6 @@ export default async function handler(req, res) {
   // ==================== MODO TESTE (para você testar agora) ====================
   const testEmails = [
     "polyanadonascimentopadua@gmail.com",
-    "seuemail@teste.com",        // ← TROQUE pelo seu e-mail real
     "jean@exatafinanca.com"
   ].map(e => e.toLowerCase());
 
