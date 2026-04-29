@@ -55,7 +55,7 @@ export default async function handler(req, res) {
     }
 
     // Consulta de vendas
-    const productId = "7490815";
+    const productId = "7535788";
     const url = `https://developers.hotmart.com/payments/api/v1/sales/history?transaction_status=APPROVED&buyer_email=${encodeURIComponent(email)}&product_id=${productId}`;
 
     const salesRes = await fetch(url, {
