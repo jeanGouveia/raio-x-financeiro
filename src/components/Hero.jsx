@@ -9,16 +9,17 @@ export default function Hero({ scrollToUpload }) {
       </h1>
 
       <p className="text-slate-400 mt-6 text-lg max-w-2xl mx-auto leading-relaxed">
-        Envie sua planilha e receba um diagnóstico completo da sua vida financeira,
-        com score, alertas e um plano claro para sair do aperto.
+        Envie sua planilha e receba em segundos: score financeiro, graficos,
+        alertas e plano de acao.
       </p>
 
       <button
         onClick={scrollToUpload}
         className="mt-8 bg-emerald-500 hover:bg-emerald-600 text-black font-bold text-lg px-8 py-4 rounded-xl transition"
       >
-        Fazer meu diagnóstico agora
+        Fazer meu pré-diagnóstico agora
       </button>
+      
     </header>
   );
 }

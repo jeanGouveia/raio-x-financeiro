@@ -2,13 +2,15 @@ import ScoreHero from "./ScoreHero";
 import SummaryMetrics from "./SummaryMetrics";
 import Card from "./Card";
 import SectionTitle from "./SectionTitle";
+import PaymentUnlockCard from "./PaymentUnlockCard";
 
 export default function FreeResult({
   result,
   animatedScore,
   unlocked,
   onBuyClick,
-  onCheckPayment
+  onCheckPayment,
+  loading
 }) {
   return (
     <div className="space-y-4 ">
@@ -50,13 +52,10 @@ export default function FreeResult({
           >
             Quero acesso completo por 30 dias!
           </button>
-
-          <button
-            onClick={onCheckPayment}
-            className="text-emerald-400 hover:text-emerald-300 underline text-sm font-medium"
-          >
-            Já paguei → Desbloquear agora
-          </button>
+          <p className="text-emerald-300 text-sm font-semibold text-center">
+            Por apenas R$ 47,90 (acesso completo por 30 dias)
+          </p>
+          <PaymentUnlockCard onUnlock={onCheckPayment} loading={loading} />
         </div>
       )}
     </div>
