@@ -54,7 +54,7 @@ export default function FreeResult({
             {OFFER.ctaPrimary}
           </button>
           <p className="text-emerald-300 text-sm font-semibold text-center">
-            Por apenas {OFFER.priceLabel} (acesso completo por {OFFER.accessPeriodLabel})
+            Por apenas {OFFER.priceLabel} ( Preço promocional de lançamento )
           </p>
           <PaymentUnlockCard onUnlock={onCheckPayment} isUnlocking={isUnlocking} />
         </div>

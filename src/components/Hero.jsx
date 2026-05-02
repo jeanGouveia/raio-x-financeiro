@@ -20,9 +20,6 @@ export default function Hero({ scrollToUpload }) {
       >
         {OFFER.ctaHero}
       </button>
-      <p className="text-emerald-300 mt-3 text-sm font-semibold">
-        {COPY.heroOfferLine}
-      </p>
     </header>
   );
 }
