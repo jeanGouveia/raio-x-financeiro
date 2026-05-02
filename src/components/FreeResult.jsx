@@ -3,6 +3,7 @@ import SummaryMetrics from "./SummaryMetrics";
 import Card from "./Card";
 import SectionTitle from "./SectionTitle";
 import PaymentUnlockCard from "./PaymentUnlockCard";
+import { OFFER } from "../config/offer";
 
 export default function FreeResult({
   result,
@@ -10,7 +11,7 @@ export default function FreeResult({
   unlocked,
   onBuyClick,
   onCheckPayment,
-  loading
+  isUnlocking
 }) {
   return (
     <div className="space-y-4 ">
@@ -50,12 +51,12 @@ export default function FreeResult({
             onClick={onBuyClick}
             className="inline-block bg-emerald-500 hover:bg-emerald-600 text-black font-black text-xl px-16 py-5 rounded-2xl transition-all w-full md:w-auto text-center"
           >
-            Quero acesso completo por 30 dias!
+            {OFFER.ctaPrimary}
           </button>
           <p className="text-emerald-300 text-sm font-semibold text-center">
-            Por apenas R$ 47,90 (acesso completo por 30 dias)
+            Por apenas {OFFER.priceLabel} (acesso completo por {OFFER.accessPeriodLabel})
           </p>
-          <PaymentUnlockCard onUnlock={onCheckPayment} loading={loading} />
+          <PaymentUnlockCard onUnlock={onCheckPayment} isUnlocking={isUnlocking} />
         </div>
       )}
     </div>

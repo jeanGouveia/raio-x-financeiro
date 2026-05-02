@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef } from "react";
 import Hero from "./components/Hero";
 import PainPoints from "./components/PainPoints";
 import UploadSection from "./components/UploadSection";
@@ -10,115 +10,21 @@ import Projections from "./components/premium/Projections";
 import Alerts from "./components/premium/Alerts";
 import PremiumTips from "./components/premium/PremiumTips";
 import PDFButton from "./components/premium/PDFButton";
-import { parseExcel } from "./services/parser";
-import FinancialAnalyzer from "./services/FinancialAnalyzer";
-import { generateFinancialReportPdf } from "./services/generateFinancialReportPdf";
+import { useFinancialAnalysis } from "./hooks/useFinancialAnalysis";
+import { usePaymentUnlock } from "./hooks/usePaymentUnlock";
+import { usePdfExport } from "./hooks/usePdfExport";
+import { useCheckout } from "./hooks/useCheckout";
+import { OFFER } from "./config/offer";
 
 export default function App() {
-  const [loading, setLoading] = useState(false);
-  const [result, setResult] = useState(null);
-  const [unlocked, setUnlocked] = useState(() => localStorage.getItem("premiumUnlocked") === "true");
-  const [animatedScore, setAnimatedScore] = useState(0);
-  const [pdfGenerating, setPdfGenerating] = useState(false);
-  const [showToast, setShowToast] = useState(false);
-  const premiumRef = useRef(null);
+  const { isAnalyzing, result, animatedScore, handleFile } = useFinancialAnalysis();
+  const { unlocked, isUnlocking, checkHotmartPayment } = usePaymentUnlock();
+  const { pdfGenerating, handleGeneratePDF } = usePdfExport();
+  const { showToast, handleBuyClick } = useCheckout();
   const uploadRef = useRef(null);
 
   const scrollToUpload = () => {
     uploadRef.current?.scrollIntoView({ behavior: "smooth" });
-  };
-
-  const handleFile = async (file) => {
-    if (!file) return;
-
-    try {
-      setLoading(true);
-      const parsed = await parseExcel(file);
-      const analysis = await FinancialAnalyzer.analyze(parsed.transactions);
-
-      setResult({
-        free: {
-          summary: analysis.summary,
-          mainDiagnosis: analysis.mainDiagnosis,
-          freeSuggestions: analysis.freeSuggestions,
-        },
-        premium: {
-          scoreBreakdown: analysis.scoreBreakdown,
-          categoryAnalysis: analysis.categoryAnalysis,
-          projections: analysis.projections,
-          alerts: analysis.alerts,
-          premiumSuggestions: analysis.premiumSuggestions,
-          topCategories: analysis.topCategories,
-        },
-      });
-
-      setAnimatedScore(0);
-    } catch (error) {
-      console.error(error);
-      alert(error.message || "Erro ao processar a planilha.");
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    if (!result?.free) return;
-    let current = 0;
-    const target = result.free.summary?.score || 0;
-
-    const interval = setInterval(() => {
-      current += Math.max(1, Math.ceil((target - current) / 15));
-      if (current >= target) {
-        current = target;
-        clearInterval(interval);
-      }
-      setAnimatedScore(current);
-    }, 30);
-
-    return () => clearInterval(interval);
-  }, [result?.free]);
-
-  const checkHotmartPayment = async (email) => {
-    if (!email) return;
-
-    setLoading(true);
-    try {
-      const res = await fetch(`/api/check-payment?email=${encodeURIComponent(email)}`);
-      const data = await res.json();
-
-      if (data.unlocked) {
-        localStorage.setItem("premiumUnlocked", "true");
-        setUnlocked(true);
-        alert("✅ Acesso liberado com sucesso!");
-      } else {
-        alert("❌ Pagamento não encontrado. Verifique o e-mail.");
-      }
-    } catch {
-      alert("Erro ao verificar pagamento.");
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleGeneratePDF = async () => {
-    if (!result?.premium) return;
-
-    setPdfGenerating(true);
-    try {
-      generateFinancialReportPdf(result);
-    } catch (error) {
-      console.error("Erro ao gerar PDF:", error);
-      alert("Erro ao gerar o PDF. Tente novamente.");
-    } finally {
-      setPdfGenerating(false);
-    }
-  };
-
-  const handleBuyClick = () => {
-    setShowToast(true);
-    setTimeout(() => setShowToast(false), 9000);
-
-    window.open("https://pay.hotmart.com/Y105310131F?off=jvdmfsq3&bid=1775957680382", "_blank");
   };
 
   return (
@@ -132,14 +38,14 @@ export default function App() {
           </>
         )}
 
-        {loading && (
+        {isAnalyzing && (
           <div className="text-center py-20">
             <div className="animate-spin w-12 h-12 border-4 border-emerald-500 border-t-transparent rounded-full mx-auto" />
             <p className="mt-6 text-slate-400">Analisando sua planilha...</p>
           </div>
         )}
 
-        {result?.free && !loading && (
+        {result?.free && !isAnalyzing && (
           <div className="space-y-4">
             <FreeResult
               result={result}
@@ -147,11 +53,11 @@ export default function App() {
               unlocked={unlocked}
               onBuyClick={handleBuyClick}
               onCheckPayment={checkHotmartPayment}
-              loading={loading}
+              isUnlocking={isUnlocking}
             />
 
             {unlocked && result?.premium && (
-              <div ref={premiumRef} className="space-y-4">
+              <div className="space-y-4">
                 <ScoreBreakdown breakdown={result.premium.scoreBreakdown} />
                 <CategoryAnalysis categories={result.premium.categoryAnalysis} />
                 <Charts topCategories={result.premium.topCategories} summary={result.free.summary} />
@@ -159,7 +65,7 @@ export default function App() {
                 <Alerts alerts={result.premium.alerts} />
                 <PremiumTips tips={result.premium.premiumSuggestions} />
                 <div data-pdf-ignore="true">
-                  <PDFButton onClick={handleGeneratePDF} loading={pdfGenerating} />
+                  <PDFButton onClick={() => handleGeneratePDF(result)} loading={pdfGenerating} />
                 </div>
               </div>
             )}
@@ -168,7 +74,7 @@ export default function App() {
 
         {showToast && (
           <div className="fixed bottom-6 left-1/2 -translate-x-1/2 bg-slate-900 border border-slate-700 text-slate-300 px-6 py-3 rounded-xl shadow-lg text-sm animate-fade-in">
-            O pagamento será aberto em uma nova aba
+            {OFFER.ctaCheckoutToast}
           </div>
         )}
       </div>
