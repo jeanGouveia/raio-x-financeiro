@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { parseExcel } from "./services/parser";
 import UploadBox from "./components/UploadBox";
+import UploadSection from "./components/UploadSection";
 import FinancialAnalyzer from "./services/FinancialAnalyzer";
 import { Pie, Bar } from "react-chartjs-2";
 import { jsPDF } from "jspdf";
@@ -15,6 +16,11 @@ import {
   LinearScale,
   BarElement,
 } from "chart.js";
+import Hero from "./components/Hero";
+import PainPoints from "./components/PainPoints";
+import FreeResult from "./components/FreeResult";
+import SectionTitle from "./components/SectionTitle";
+import Card from "./components/Card";
 
 ChartJS.register(ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarElement);
 
@@ -23,135 +29,131 @@ ChartJS.register(ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarEle
 const fmt = (n) =>
   Number(n).toLocaleString("pt-BR", { minimumFractionDigits: 0 });
 
-const getScoreColor = (score) => {
-  if (score < 40) return "text-red-500";
-  if (score < 70) return "text-amber-500";
-  return "text-emerald-500";
-};
+
 
 const alertStyles = {
-  critical: { bg: "bg-red-950/40 border-red-800/50",   dot: "bg-red-400",   label: "Crítico"  },
-  warning:  { bg: "bg-amber-950/40 border-amber-800/50", dot: "bg-amber-400", label: "Atenção"  },
+  critical: { bg: "bg-red-950/40 border-red-800/50", dot: "bg-red-400", label: "Crítico" },
+  warning: { bg: "bg-amber-950/40 border-amber-800/50", dot: "bg-amber-400", label: "Atenção" },
   positive: { bg: "bg-emerald-950/40 border-emerald-700/50", dot: "bg-emerald-400", label: "Positivo" },
-  info:     { bg: "bg-slate-800/60 border-slate-700/50", dot: "bg-slate-400", label: "Info"    },
+  info: { bg: "bg-slate-800/60 border-slate-700/50", dot: "bg-slate-400", label: "Info" },
 };
 
 const statusBadge = {
-  ótimo:      "bg-emerald-900/60 text-emerald-300",
-  aceitável:  "bg-amber-900/60 text-amber-300",
-  alto:       "bg-red-900/60 text-red-300",
-  normal:     "bg-slate-800 text-slate-400",
+  ótimo: "bg-emerald-900/60 text-emerald-300",
+  aceitável: "bg-amber-900/60 text-amber-300",
+  alto: "bg-red-900/60 text-red-300",
+  normal: "bg-slate-800 text-slate-400",
 };
 
 const impactColor = {
   positive: "bg-emerald-400",
-  neutral:  "bg-amber-400",
+  neutral: "bg-amber-400",
   negative: "bg-red-400",
 };
 
 // ─── sub-components ──────────────────────────────────────────────────────────
 
-function SectionTitle({ children }) {
-  return (
-    <p className="text-xs uppercase tracking-widest text-slate-500 mb-4">
-      {children}
-    </p>
-  );
-}
+// function SectionTitle({ children }) {
+//   return (
+//     <p className="text-xs uppercase tracking-widest text-slate-500 mb-4">
+//       {children}
+//     </p>
+//   );
+// }
 
-function Card({ children, className = "" }) {
-  return (
-    <div className={`bg-slate-900 border border-slate-700/60 rounded-2xl p-6 ${className}`}>
-      {children}
-    </div>
-  );
-}
+// function Card({ children, className = "" }) {
+//   return (
+//     <div className={`bg-slate-900 border border-slate-700/60 rounded-2xl p-6 ${className}`}>
+//       {children}
+//     </div>
+//   );
+// }
 
 // Gauge SVG animado
-function ScoreGauge({ score }) {
-  const arcLen = 148;
-  const progress = Math.round((score / 100) * arcLen);
-  const color = score >= 70 ? "#1a9e6e" : score >= 40 ? "#f59e0b" : "#ef4444";
-  // arco semicircular: M8,58 A47,47 0 0,1 102,58
-  return (
-    <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "4px" }}>
-      <svg width="110" height="65" viewBox="0 0 110 65">
-        {/* trilho */}
-        <path
-          d="M8,58 A47,47 0 0,1 102,58"
-          fill="none"
-          stroke="rgba(255,255,255,0.08)"
-          strokeWidth="9"
-          strokeLinecap="round"
-        />
-        {/* progresso */}
-        <path
-          d="M8,58 A47,47 0 0,1 102,58"
-          fill="none"
-          stroke={color}
-          strokeWidth="9"
-          strokeLinecap="round"
-          strokeDasharray={`${progress} ${arcLen}`}
-        />
-        <text
-          x="55" y="52"
-          textAnchor="middle"
-          fontFamily="ui-monospace, monospace"
-          fontSize="15"
-          fontWeight="500"
-          fill={color}
-        >
-          {score}%
-        </text>
-      </svg>
-      <span style={{ fontSize: "11px", color: "rgba(148,163,184,0.7)" }}>Escala 0–100</span>
-    </div>
-  );
-}
+// function ScoreGauge({ score }) {
+//   const arcLen = 148;
+//   const progress = Math.round((score / 100) * arcLen);
+//   const color = score >= 70 ? "#1a9e6e" : score >= 40 ? "#f59e0b" : "#ef4444";
+//   // arco semicircular: M8,58 A47,47 0 0,1 102,58
+//   return (
+//     <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "4px" }}>
+//       <svg width="110" height="65" viewBox="0 0 110 65">
+//         {/* trilho */}
+//         <path
+//           d="M8,58 A47,47 0 0,1 102,58"
+//           fill="none"
+//           stroke="rgba(255,255,255,0.08)"
+//           strokeWidth="9"
+//           strokeLinecap="round"
+//         />
+//         {/* progresso */}
+//         <path
+//           d="M8,58 A47,47 0 0,1 102,58"
+//           fill="none"
+//           stroke={color}
+//           strokeWidth="9"
+//           strokeLinecap="round"
+//           strokeDasharray={`${progress} ${arcLen}`}
+//         />
+//         <text
+//           x="55" y="52"
+//           textAnchor="middle"
+//           fontFamily="ui-monospace, monospace"
+//           fontSize="15"
+//           fontWeight="500"
+//           fill={color}
+//         >
+//           {score}%
+//         </text>
+//       </svg>
+//       <span style={{ fontSize: "11px", color: "rgba(148,163,184,0.7)" }}>Escala 0–100</span>
+//     </div>
+//   );
+// }
 
 // Score hero
-function ScoreHero({ score, animatedScore, diagnosis }) {
-  const color = getScoreColor(score);
-  const levelLabel = score >= 85 ? "Nível avançado" : score >= 70 ? "Nível intermediário" : "Em desenvolvimento";
+// function ScoreHero({ score, animatedScore, diagnosis }) {
+//   const color = getScoreColor(score);
+//   const levelLabel = score >= 85 ? "Nível avançado" : score >= 70 ? "Nível intermediário" : "Em desenvolvimento";
 
-  return (
-    <Card className="flex items-center justify-between gap-6">
-      <div className="flex-1 min-w-0">
-        <SectionTitle>Seu score financeiro</SectionTitle>
-        <div className={`text-8xl font-black leading-none ${color}`}>
-          {animatedScore}
-          <span className="text-4xl font-light ml-1">%</span>
-        </div>
-        <p className="mt-4 text-base text-slate-300 leading-relaxed">{diagnosis}</p>
-        <span className="inline-block mt-3 border border-emerald-700/60 text-emerald-400 text-xs font-medium px-3 py-1 rounded-full tracking-wide">
-          {levelLabel}
-        </span>
-      </div>
-      <div className="shrink-0">
-        <ScoreGauge score={score} />
-      </div>
-    </Card>
-  );
-}
+//   return (
+//     <Card className="flex items-center justify-between gap-6">
+//       <div className="flex-1 min-w-0">
+//         <SectionTitle>Seu score financeiro</SectionTitle>
+//         <div className={`text-8xl font-black leading-none ${color}`}>
+//           {animatedScore}
+//           <span className="text-4xl font-light ml-1">%</span>
+//         </div>
+//         <p className="mt-4 text-base text-slate-300 leading-relaxed">{diagnosis}</p>
+//         <span className="inline-block mt-3 border border-emerald-700/60 text-emerald-400 text-xs font-medium px-3 py-1 rounded-full tracking-wide">
+//           {levelLabel}
+//         </span>
+//       </div>
+//       <div className="shrink-0">
+//         <ScoreGauge score={score} />
+//       </div>
+//     </Card>
+//   );
+// }
 
 // Resumo financeiro
-function SummaryMetrics({ summary }) {
-  return (
-    <div className="grid md:grid-cols-3 gap-4">
-      {[
-        { label: "Receita total",  value: summary.totalIncome,   color: "text-emerald-400", tag: `${summary.incomeSourceCount} fonte(s)` },
-        { label: "Despesas",       value: summary.totalExpenses,  color: "text-rose-400",    tag: `${summary.expenseCategoryCount} categoria(s)` },
-        { label: "Saldo líquido",  value: summary.netBalance,     color: "text-white",       tag: `${summary.savingsRate}% da receita` },
-      ].map(({ label, value, color, tag }) => (
-        <Card key={label}>
-          <p className="text-slate-400 text-xs uppercase tracking-wider mb-2">{label}</p>
-          <p className={`text-3xl font-bold ${color}`}>R$ {fmt(value)}</p>
-          <p className="text-slate-500 text-xs mt-2">{tag}</p>
-        </Card>
-      ))}
-    </div>
-  );
-}
+// function SummaryMetrics({ summary }) {
+//   return (
+//     <div className="grid md:grid-cols-3 gap-4">
+//       {[
+//         { label: "Receita total", value: summary.totalIncome, color: "text-emerald-400", tag: `${summary.incomeSourceCount} fonte(s)` },
+//         { label: "Despesas", value: summary.totalExpenses, color: "text-rose-400", tag: `${summary.expenseCategoryCount} categoria(s)` },
+//         { label: "Saldo líquido", value: summary.netBalance, color: "text-white", tag: `${summary.savingsRate}% da receita` },
+//       ].map(({ label, value, color, tag }) => (
+//         <Card key={label}>
+//           <p className="text-slate-400 text-xs uppercase tracking-wider mb-2">{label}</p>
+//           <p className={`text-3xl font-bold ${color}`}>R$ {fmt(value)}</p>
+//           <p className="text-slate-500 text-xs mt-2">{tag}</p>
+//         </Card>
+//       ))}
+//     </div>
+//   );
+// }
 
 // Score breakdown
 function ScoreBreakdown({ breakdown }) {
@@ -247,7 +249,7 @@ function Charts({ topCategories, summary }) {
               labels: topCategories.map((c) => c.category),
               datasets: [{
                 data: topCategories.map((c) => c.amount),
-                backgroundColor: ["#10b981","#22d3ee","#eab308","#f43f5e","#8b5cf6"],
+                backgroundColor: ["#10b981", "#22d3ee", "#eab308", "#f43f5e", "#8b5cf6"],
               }],
             }}
             options={{ maintainAspectRatio: false }}
@@ -259,10 +261,10 @@ function Charts({ topCategories, summary }) {
         <div className="h-72">
           <Bar
             data={{
-              labels: ["Receita","Despesas","Saldo"],
+              labels: ["Receita", "Despesas", "Saldo"],
               datasets: [{
                 data: [summary.totalIncome, summary.totalExpenses, summary.netBalance],
-                backgroundColor: ["#10b981","#ef4444","#6366f1"],
+                backgroundColor: ["#10b981", "#ef4444", "#6366f1"],
                 borderRadius: 8,
               }],
             }}
@@ -278,8 +280,8 @@ function Charts({ topCategories, summary }) {
 function Projections({ projections }) {
   if (!projections) return null;
   const periods = [
-    { label: "3 meses",  data: projections.months3  },
-    { label: "6 meses",  data: projections.months6  },
+    { label: "3 meses", data: projections.months3 },
+    { label: "6 meses", data: projections.months6 },
     { label: "12 meses", data: projections.months12 },
     { label: "24 meses", data: projections.months24 },
   ];
@@ -401,21 +403,50 @@ function PDFButton({ onClick, loading }) {
 // ─── App ─────────────────────────────────────────────────────────────────────
 
 export default function App() {
-  const [loading, setLoading]             = useState(false);
-  const [result, setResult]               = useState(null);
-  const [unlocked, setUnlocked]           = useState(() => localStorage.getItem("premiumUnlocked") === "true");
+  const [loading, setLoading] = useState(false);
+  const [result, setResult] = useState(null);
+  const [unlocked, setUnlocked] = useState(() => localStorage.getItem("premiumUnlocked") === "true");
   const [animatedScore, setAnimatedScore] = useState(0);
   const [pdfGenerating, setPdfGenerating] = useState(false);
   const premiumRef = useRef(null);
+  const uploadRef = useRef(null);
+
+  const scrollToUpload = () => {
+    uploadRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
 
   const handleFile = async (file) => {
     if (!file) return;
+
     try {
       setLoading(true);
-      const parsed   = await parseExcel(file);
+
+      const parsed = await parseExcel(file);
       const analysis = await FinancialAnalyzer.analyze(parsed.transactions);
-      setResult(analysis);
+
+      // 👇 separação segura
+      const freeData = {
+        summary: analysis.summary,
+        mainDiagnosis: analysis.mainDiagnosis,
+        freeSuggestions: analysis.freeSuggestions,
+      };
+
+      const premiumData = {
+        scoreBreakdown: analysis.scoreBreakdown,
+        categoryAnalysis: analysis.categoryAnalysis,
+        projections: analysis.projections,
+        alerts: analysis.alerts,
+        premiumSuggestions: analysis.premiumSuggestions,
+        topCategories: analysis.topCategories,
+      };
+
+      setResult({
+        free: freeData,
+        premium: premiumData, // 👈 importante
+      });
+
       setAnimatedScore(0);
+
     } catch (error) {
       console.error(error);
       alert(error.message || "Erro ao processar a planilha.");
@@ -425,27 +456,30 @@ export default function App() {
   };
 
   useEffect(() => {
-    if (!result) return;
+    if (!result?.free) return;
     let current = 0;
-    const target = result.summary?.score || 0;
+    const target = result?.free?.summary?.score || 0;
     const interval = setInterval(() => {
       current += Math.max(1, Math.ceil((target - current) / 15));
       if (current >= target) { current = target; clearInterval(interval); }
       setAnimatedScore(current);
     }, 30);
     return () => clearInterval(interval);
-  }, [result]);
+  }, [result?.free]);
 
   const checkHotmartPayment = async () => {
     const email = prompt("Digite o e-mail utilizado na compra:");
     if (!email) return;
     setLoading(true);
     try {
-      const res  = await fetch(`/api/check-payment?email=${encodeURIComponent(email)}`);
+      const res = await fetch(`/api/check-payment?email=${encodeURIComponent(email)}`);
       const data = await res.json();
       if (data.unlocked) {
         localStorage.setItem("premiumUnlocked", "true");
         setUnlocked(true);
+
+        
+
         alert("✅ Acesso liberado com sucesso!");
       } else {
         alert("❌ Pagamento não encontrado. Verifique o e-mail.");
@@ -458,20 +492,28 @@ export default function App() {
   };
 
   const generatePDF = async () => {
-    if (!result) return;
+    if (!result?.premium) return;
     setPdfGenerating(true);
     try {
-      const { summary, scoreBreakdown, categoryAnalysis, projections, alerts, premiumSuggestions } = result;
+      const summary = result?.free?.summary;
+
+      const {
+        scoreBreakdown,
+        categoryAnalysis,
+        projections,
+        alerts,
+        premiumSuggestions,
+      } = result.premium;
       const doc = new jsPDF({ orientation: "portrait", unit: "mm", format: "a4" });
       const W = 210, M = 18; // page width, margin
       const CW = W - M * 2;  // content width
-      const BG  = [15, 23, 42];
+      const BG = [15, 23, 42];
       const CARD = [30, 41, 59];
       const GREEN = [16, 185, 129];
-      const RED   = [239, 68, 68];
+      const RED = [239, 68, 68];
       const WHITE = [255, 255, 255];
       const MUTED = [100, 116, 139];
-      const TEXT  = [203, 213, 225];
+      const TEXT = [203, 213, 225];
 
       // ── helpers ──────────────────────────────────────────────────────────────
       let y = 0;
@@ -600,9 +642,9 @@ export default function App() {
       const mW = 52, mH = 30, mGap = 4;
       const mStartX = (W - mW * 3 - mGap * 2) / 2;
       [
-        { label: "Receita",  value: `R$ ${fmt(summary.totalIncome)}`,   color: GREEN },
-        { label: "Despesas", value: `R$ ${fmt(summary.totalExpenses)}`,  color: RED   },
-        { label: "Saldo",    value: `R$ ${fmt(summary.netBalance)}`,     color: WHITE },
+        { label: "Receita", value: `R$ ${fmt(summary.totalIncome)}`, color: GREEN },
+        { label: "Despesas", value: `R$ ${fmt(summary.totalExpenses)}`, color: RED },
+        { label: "Saldo", value: `R$ ${fmt(summary.netBalance)}`, color: WHITE },
       ].forEach(({ label: lbl, value, color }, i) => {
         const x = mStartX + i * (mW + mGap);
         doc.setFillColor(...CARD);
@@ -685,9 +727,9 @@ export default function App() {
         categoryAnalysis.forEach((cat) => {
           checkY(28);
           const statusColors = {
-            "ótimo":     [16, 185, 129],
+            "ótimo": [16, 185, 129],
             "aceitável": [245, 158, 11],
-            "alto":      [239, 68, 68],
+            "alto": [239, 68, 68],
           };
           const sColor = statusColors[cat.status] || MUTED;
 
@@ -748,8 +790,8 @@ export default function App() {
       // Grid de projeções
       const pW = (CW - 9) / 4;
       [
-        { period: "3 meses",  data: projections.months3  },
-        { period: "6 meses",  data: projections.months6  },
+        { period: "3 meses", data: projections.months3 },
+        { period: "6 meses", data: projections.months6 },
         { period: "12 meses", data: projections.months12 },
         { period: "24 meses", data: projections.months24 },
       ].forEach(({ period, data }, i) => {
@@ -812,9 +854,9 @@ export default function App() {
       if (alerts?.length) {
         const alertColorMap = {
           critical: RED,
-          warning:  [245, 158, 11],
+          warning: [245, 158, 11],
           positive: GREEN,
-          info:     [148, 163, 184],
+          info: [148, 163, 184],
         };
         alerts.forEach((alert) => {
           checkY(22);
@@ -884,36 +926,42 @@ export default function App() {
     }
   };
 
+  const [showToast, setShowToast] = useState(false);
+
+  const handleBuyClick = () => {
+    setShowToast(true);
+
+    setTimeout(() => {
+      setShowToast(false);
+    }, 9000);
+
+    window.open(
+      "https://pay.hotmart.com/Y105310131F?off=jvdmfsq3&bid=1775957680382",
+      "_blank"
+    );
+  };
+
   return (
     <div className="min-h-screen bg-[#0f172a] text-slate-200 p-6 font-sans">
       <div className="max-w-4xl mx-auto">
 
-        {/* Header */}
-        <header className="text-center mb-12">
-          <h1 className="text-5xl font-black text-white">
-            Exata <span className="text-emerald-400">Finança</span>
-          </h1>
-          <p className="text-slate-400 mt-3 text-lg">
-            Diagnóstico financeiro inteligente em segundos
-          </p>
-        </header>
+        {/* ───────── LANDING (ANTES DO RESULTADO) ───────── */}
+        {!result?.free && (
+          <>
+            {/* Header */}
+            <Hero scrollToUpload={scrollToUpload} />
 
-        {/* Upload */}
-        {!result && (
-          <div className="bg-slate-900/70 border border-slate-700 p-10 rounded-3xl">
-            <UploadBox onFile={handleFile} />
-            <div className="mt-8 text-center">
-              <a
-                href="/Planilha-modelo.xlsx"
-                download
-                className="inline-flex items-center gap-2 text-emerald-400 hover:text-emerald-300 text-sm font-medium"
-              >
-                <Download size={18} />
-                Baixar planilha modelo gratuita
-              </a>
-            </div>
-          </div>
+            {/* Dores */}
+            <PainPoints />
+
+            {/* Upload */}
+            <UploadSection
+              uploadRef={uploadRef}
+              onFile={handleFile}
+            />
+          </>
         )}
+
 
         {/* Loading */}
         {loading && (
@@ -923,40 +971,49 @@ export default function App() {
           </div>
         )}
 
-        {/* Resultado */}
-        {result && !loading && (
+        {/* ───────── RESULTADO ───────── */}
+        {result?.free && !loading && (
           <div className="space-y-4">
 
-            {/* ── GRATUITO ── */}
-            <ScoreHero
-              score={result.summary.score}
+            {/* GRATUITO */}
+            {/* <ScoreHero
+              score={result?.free?.summary?.score}
               animatedScore={animatedScore}
-              diagnosis={result.mainDiagnosis}
-            />
+              diagnosis={result?.free?.mainDiagnosis}
+            /> */}
 
-            <SummaryMetrics summary={result.summary} />
+            {/* <SummaryMetrics summary={result?.free?.summary} /> */}
 
-            <Card>
+            {/* <Card>
               <SectionTitle>Dicas iniciais</SectionTitle>
               <div className="space-y-3">
-                {result.freeSuggestions?.map((s, i) => (
+                {result?.freeSuggestions?.map((s, i) => (
                   <div key={i} className="flex items-start gap-3">
                     <span className="text-emerald-400 mt-0.5 shrink-0">•</span>
                     <p className="text-sm text-slate-300 leading-relaxed">{s}</p>
                   </div>
                 ))}
               </div>
-            </Card>
+            </Card> */}
 
-            {/* ── CTA pagamento ── */}
-            {!unlocked && (
+            <FreeResult
+              result={result}
+              animatedScore={animatedScore}
+              unlocked={unlocked}
+              onBuyClick={handleBuyClick}
+              onCheckPayment={checkHotmartPayment}
+            />
+
+            {/* CTA pagamento */}
+            {/* {result?.free && !unlocked && (
               <div className="flex flex-col items-center gap-4 py-4">
-                <Link
-                  to="https://pay.hotmart.com/Y105310131F?off=jvdmfsq3&bid=1775957680382"
+                <button
+                  onClick={handleBuyClick}
                   className="inline-block bg-emerald-500 hover:bg-emerald-600 text-black font-black text-xl px-16 py-5 rounded-2xl transition-all w-full md:w-auto text-center"
                 >
-                    Quero acesso completo por 30 dias!
-                </Link>
+                  Quero acesso completo por 30 dias!
+                </button>
+
                 <button
                   onClick={checkHotmartPayment}
                   className="text-emerald-400 hover:text-emerald-300 underline text-sm font-medium"
@@ -964,23 +1021,33 @@ export default function App() {
                   Já paguei → Desbloquear agora
                 </button>
               </div>
-            )}
+            )} */}
 
-            {/* ── PREMIUM ── */}
-            {unlocked && (
+
+            {/* PREMIUM */}
+            {unlocked && result?.premium && (
               <div ref={premiumRef} className="space-y-4">
-                <ScoreBreakdown breakdown={result.scoreBreakdown} />
-                <CategoryAnalysis categories={result.categoryAnalysis} />
-                <Charts topCategories={result.topCategories} summary={result.summary} />
-                <Projections projections={result.projections} />
-                <Alerts alerts={result.alerts} />
-                <PremiumTips tips={result.premiumSuggestions} />
+                <ScoreBreakdown breakdown={result?.premium?.scoreBreakdown} />
+                <CategoryAnalysis categories={result?.premium?.categoryAnalysis} />
+                <Charts
+                  topCategories={result?.premium?.topCategories}
+                  summary={result?.free?.summary}
+                />
+                <Projections projections={result?.premium?.projections} />
+                <Alerts alerts={result?.premium?.alerts} />
+                <PremiumTips tips={result?.premium?.premiumSuggestions} />
+
                 <div data-pdf-ignore="true">
                   <PDFButton onClick={generatePDF} loading={pdfGenerating} />
                 </div>
               </div>
             )}
 
+          </div>
+        )}
+        {showToast && (
+          <div className="fixed bottom-6 left-1/2 -translate-x-1/2 bg-slate-900 border border-slate-700 text-slate-300 px-6 py-3 rounded-xl shadow-lg text-sm animate-fade-in">
+            O pagamento será aberto em uma nova aba
           </div>
         )}
       </div>
