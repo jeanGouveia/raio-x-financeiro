@@ -4,7 +4,7 @@ export const OFFER = {
   ctaPrimary: "Quero acesso completo por 30 dias!",
   ctaHero: "Fazer meu diagnóstico agora",
   ctaCheckoutToast: "O pagamento será aberto em uma nova aba",
-  checkoutUrl: "https://pay.hotmart.com/Y105310131F?off=jvdmfsq3&bid=1775957680382",
+  checkoutUrl: "https://pay.hotmart.com/Y105310131F?off=jvdmfsq3&bid=1777745232821",
 };
 
 export const COPY = {
