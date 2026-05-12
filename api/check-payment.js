@@ -11,7 +11,8 @@ export default async function handler(req, res) {
   // ==================== MODO TESTE (para você testar agora) ====================
   const testEmails = [
     "polyanadonascimentopadua@gmail.com",
-    "jean@exatafinanca.com"
+    "jean@exatafinanca.com",
+    "contatoaugusto84@gmail.com"
   ].map(e => e.toLowerCase());
 
   if (testEmails.includes(email.toLowerCase())) {
