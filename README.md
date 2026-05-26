@@ -1,18 +1,40 @@
-# React + Vite
+# Valtun / Ascen — Site + Raio-X Financeiro
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Monorepo Vite com **várias páginas**:
 
-Currently, two official plugins are available:
+| URL | Arquivo | Descrição |
+|-----|---------|-----------|
+| `/` | `index.html` | Landing Ascen (estática) |
+| `/raio-x/` | `raio-x/index.html` | Ferramenta Raio-X (React) |
+| `/privacidade.html` | `privacidade.html` | Política de privacidade |
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Desenvolvimento
 
-## React Compiler
+```bash
+npm install
+npm run dev          # Vite (landing + raio-x + privacidade)
+npm run server       # API Hotmart (porta 3001)
+npm run dev-full     # Vite + API juntos
+```
 
-The React Compiler is enabled on this template. See [this documentation](https://react.dev/learn/react-compiler) for more information.
+- Landing: http://localhost:5173/
+- Raio-X: http://localhost:5173/raio-x/
+- Privacidade: http://localhost:5173/privacidade.html
 
-Note: This will impact Vite dev & build performances.
+## Variáveis de ambiente
 
-## Expanding the ESLint configuration
+Copie `.env.example` para `.env` e preencha `VITE_SUPABASE_*` (lista VIP) e credenciais Hotmart.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+No Supabase, execute `supabase/waitlist.sql`.
+
+## Build e deploy
+
+```bash
+npm run build
+```
+
+`vercel.json` reescreve rotas `/raio-x/*` para o SPA React.
+
+## Componentes
+
+- `src/components/WaitlistForm.jsx` — formulário VIP (React); a landing usa `public/ascen-landing.js` + `window.VALTUN_SUPABASE` injetado em `index.html`.

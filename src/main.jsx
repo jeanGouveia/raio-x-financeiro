@@ -9,7 +9,7 @@ import Pricing from './components/Pricing.jsx'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <BrowserRouter>
+    <BrowserRouter basename="/raio-x">
       <Routes>
         <Route path="/" element={<App />} />
         <Route path="/precos" element={<Pricing />} />

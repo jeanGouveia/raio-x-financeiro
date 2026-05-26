@@ -1,0 +1,6 @@
+{
+  "rewrites": [
+    { "source": "/raio-x", "destination": "/raio-x/index.html" },
+    { "source": "/raio-x/:path((?!assets/).*)", "destination": "/raio-x/index.html" }
+  ]
+}

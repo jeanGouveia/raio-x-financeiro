@@ -1,13 +1,563 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Exata Finança</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
-  </body>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Valtun – Ascen | Sua Ascensão Financeira Começa Aqui</title>
+  <meta name="description" content="Ascen é o sistema operacional da sua ascensão financeira. Controle total, IA brutal e clareza financeira real. Entre na lista VIP e garanta seu bônus de lançamento." />
+  <meta property="og:title" content="Valtun Ascen – Pare de Sobreviver. Comece a Subir." />
+  <meta property="og:description" content="Controle total. Insights brutais de IA. Ascensão financeira real." />
+  <meta property="og:image" content="https://valtun.com.br/og-image.png" />
+  <meta property="og:url" content="https://valtun.com.br" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Ascen by Valtun",
+    "applicationCategory": "FinanceApplication",
+    "description": "Sistema operacional da sua ascensão financeira com IA avançada.",
+    "url": "https://valtun.com.br",
+    "operatingSystem": "Android",
+    "offers": {
+      "@type": "Offer",
+      "price": "29.90",
+      "priceCurrency": "BRL"
+    }
+  }
+  </script>
+  <link rel="stylesheet" href="/ascen-landing.css" />
+</head>
+<body>
+
+
+<!-- ────────── NAVBAR ────────── -->
+<nav id="navbar">
+  <a href="/" class="nav-logo">VAL<span>TUN</span></a>
+  <ul class="nav-links">
+    <li><a href="#ascen">Ascen</a></li>
+    <li><a href="#raiox">Raio-X</a></li>
+    <li><a href="/raio-x/">Ferramenta Raio-X</a></li>
+    <li><a href="#precos">Preços</a></li>
+    <li><a href="#faq">FAQ</a></li>
+  </ul>
+  <a href="#waitlist" class="btn-vip">Entrar na Lista VIP →</a>
+  <button class="nav-mobile-toggle" aria-label="Menu" onclick="toggleNav()">
+    <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h16M3 12h16M3 18h16"/></svg>
+  </button>
+</nav>
+
+<!-- ────────── HERO ────────── -->
+<section class="hero" id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+
+  <div style="max-width:1100px;width:100%;display:flex;flex-direction:column;align-items:center;gap:3rem;position:relative;z-index:2;">
+
+    <div class="hero-content">
+      <div class="hero-badge">
+        <span class="badge-dot"></span>
+        Lançamento em Breve · Vagas Limitadas
+      </div>
+
+      <h1>
+        Sua vida financeira está
+        <span class="line-break"></span>
+        prestes a mudar de
+        <span class="cyan"> patamar.</span>
+      </h1>
+
+      <p class="hero-sub">
+        <strong>Controle total. Insights brutais de IA. Ascensão financeira real.</strong><br/>
+        Pare de sobreviver. Comece a subir.
+      </p>
+
+      <div class="hero-ctas">
+        <a href="#waitlist" class="btn-primary">⚡ Quero Acesso Antecipado + Bônus de Lançamento</a>
+        <a href="#" class="btn-secondary">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M3.18 23.76c.33.18.7.24 1.06.18l12.17-12.17-2.83-2.83L3.18 23.76zM22.7 9.61L19.6 7.8l-3.17 3.17 3.17 3.17 3.12-1.82c.89-.52.89-1.69-.02-2.71zM1.04.55C.73.87.55 1.37.55 2.02v19.96c0 .65.18 1.15.49 1.47l.07.07L11.72 12.4v-.25L1.11.48l-.07.07zM13.5 8.5l-2.5-2.5L1.04.55c-.3.32-.48.82-.48 1.47l10.5 10.5 2.44-2.02z"/></svg>
+          Baixar App Android Agora
+        </a>
+      </div>
+    </div>
+
+    <div class="hero-mockup float">
+      <div class="phone-frame">
+        <div class="phone-notch"></div>
+        <div class="phone-screen">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
+            <div>
+              <div class="phone-greeting">Bom dia 👋</div>
+              <div class="phone-name">Rafael A.</div>
+            </div>
+            <div style="width:32px;height:32px;border-radius:50%;background:var(--cyan-dim);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:0.8rem;">🔔</div>
+          </div>
+
+          <div class="phone-balance-card">
+            <div class="phone-balance-label">Saldo livre este mês</div>
+            <div class="phone-balance-value">R$ 2.847</div>
+            <div class="phone-balance-change">↑ 18% vs mês anterior</div>
+          </div>
+
+          <div class="phone-ai-card">
+            <div class="phone-ai-title">⚡ Alerta Ascen IA</div>
+            <div class="phone-ai-text">Você gastou 34% a mais em delivery esta semana. Redirecionar para reserva vai acelerar sua meta em 2 meses.</div>
+          </div>
+
+          <div class="phone-bars">
+            <div class="phone-bar" style="height:35%;"></div>
+            <div class="phone-bar" style="height:55%;"></div>
+            <div class="phone-bar" style="height:45%;"></div>
+            <div class="phone-bar active" style="height:72%;"></div>
+            <div class="phone-bar" style="height:60%;"></div>
+            <div class="phone-bar active" style="height:88%;"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="play-badge">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="#22C55E"><path d="M3.18 23.76c.33.18.7.24 1.06.18l12.17-12.17-2.83-2.83L3.18 23.76zM22.7 9.61L19.6 7.8l-3.17 3.17 3.17 3.17 3.12-1.82c.89-.52.89-1.69-.02-2.71zM1.04.55C.73.87.55 1.37.55 2.02v19.96c0 .65.18 1.15.49 1.47l.07.07L11.72 12.4v-.25L1.11.48l-.07.07zM13.5 8.5l-2.5-2.5L1.04.55c-.3.32-.48.82-.48 1.47l10.5 10.5 2.44-2.02z"/></svg>
+        <span><strong>Em breve</strong> na Play Store</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ────────── SOCIAL PROOF ────────── -->
+<div class="social-strip">
+  <div class="social-stat">
+    <span class="num">4.200+</span>
+    <span class="label">na Lista VIP</span>
+  </div>
+  <div class="social-divider"></div>
+  <div class="social-stat">
+    <span class="num">4.9★</span>
+    <span class="label">Avaliação Média</span>
+  </div>
+  <div class="social-divider"></div>
+  <div class="social-stat">
+    <span class="num">R$ 0</span>
+    <span class="label">Custo pra começar</span>
+  </div>
+  <div class="social-divider"></div>
+  <div class="social-stat">
+    <span class="num">IA</span>
+    <span class="label">100% Nativa</span>
+  </div>
+</div>
+
+<!-- ────────── DOR ────────── -->
+<section class="pain-section" id="problema">
+  <div class="section-tag">⚠ O Problema Real</div>
+  <h2 class="section-title">Enquanto você adia, seu dinheiro<br/>continua <span style="color:var(--red)">te controlando.</span></h2>
+  <p class="section-sub">Não é falta de renda. É falta de clareza. Sem um sistema, você trabalha pra pagar contas — e nunca sobe.</p>
+
+  <div class="pain-grid">
+    <div class="pain-card reveal">
+      <div class="pain-icon">🕳️</div>
+      <h3>Dinheiro vazando sem você perceber</h3>
+      <p>Assinaturas esquecidas, gastos invisíveis, <span class="pain-red">dinheiro que some</span> sem explicação no fim do mês.</p>
+    </div>
+    <div class="pain-card reveal">
+      <div class="pain-icon">🔄</div>
+      <h3>Viver eternamente mês a mês</h3>
+      <p>Dia 1 aliviado, dia 20 ansioso. O ciclo nunca para — e a sensação de <span class="pain-red">andar em círculos</span> só aumenta.</p>
+    </div>
+    <div class="pain-card reveal">
+      <div class="pain-icon">📦</div>
+      <h3>Parcelas fora de controle</h3>
+      <p>Você não sabe ao certo quantas parcelas tem abertas, nem quando acabam. O <span class="pain-red">comprometimento invisível</span> engole sua renda.</p>
+    </div>
+    <div class="pain-card reveal">
+      <div class="pain-icon">😰</div>
+      <h3>Medo do futuro financeiro</h3>
+      <p>Nenhuma reserva, nenhum plano, nenhuma direção. O futuro parece uma <span class="pain-red">névoa de incerteza</span> que te paralisa.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ────────── ASCEN FEATURES ────────── -->
+<section class="features-section" id="ascen">
+  <div class="centered">
+    <div class="section-tag">✦ Apresentando o Ascen</div>
+    <h2 class="section-title">O sistema operacional da sua<br/><span style="color:var(--cyan)">ascensão financeira.</span></h2>
+    <p class="section-sub">Não é mais um app de finanças. É a infraestrutura completa pra você finalmente subir de nível.</p>
+  </div>
+
+  <div class="features-grid" style="max-width:1100px;margin:3rem auto 0;">
+    <div class="feature-card reveal">
+      <div class="feature-icon-wrap">🧠</div>
+      <h3>IA que Pensa por Você</h3>
+      <p>O Ascen analisa seus padrões, detecta desperdícios e entrega insights que nenhum humano veria tão rápido. É como ter um CFO pessoal.</p>
+    </div>
+    <div class="feature-card reveal">
+      <div class="feature-icon-wrap">📡</div>
+      <h3>Raio-X Financeiro em Tempo Real</h3>
+      <p>Visão 360° de tudo: entradas, saídas, parcelas, metas e padrões. Nada escondido, nada surpresa.</p>
+    </div>
+    <div class="feature-card reveal">
+      <div class="feature-icon-wrap">🎯</div>
+      <h3>Metas que Realmente Acontecem</h3>
+      <p>Defina objetivos. A IA calcula o caminho mais rápido e te avisa quando você desvia. Disciplina automatizada.</p>
+    </div>
+    <div class="feature-card reveal">
+      <div class="feature-icon-wrap">⚡</div>
+      <h3>Alertas Antes do Problema</h3>
+      <p>Previsão de estouro de orçamento, vencimentos próximos, padrões de risco — antes de virar dor de cabeça.</p>
+    </div>
+    <div class="feature-card reveal">
+      <div class="feature-icon-wrap">📊</div>
+      <h3>Dashboard de Elite</h3>
+      <p>Interface limpa, dados densos, visual premium. Você vai querer olhar todos os dias — e vai aprender algo novo em cada acesso.</p>
+    </div>
+    <div class="feature-card reveal">
+      <div class="feature-icon-wrap">🔒</div>
+      <h3>Segurança Bancária</h3>
+      <p>Dados criptografados, arquitetura segura, zero compartilhamento. Sua vida financeira é sua. Só sua.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ────────── RAIO-X ────────── -->
+<section class="raiox-section" id="raiox">
+  <div class="raiox-inner">
+    <div>
+      <div class="section-tag">🔬 Diferencial Exclusivo</div>
+      <h2 class="section-title">O Raio-X Financeiro que ninguém mais tem.</h2>
+      <p class="section-sub">Nossa IA não apenas categoriza — ela interpreta, prevê e age. Diferente de qualquer outro app no mercado.</p>
+
+      <div class="raiox-pills">
+        <div class="raiox-pill reveal">
+          <div class="raiox-pill-icon">🔍</div>
+          <div>
+            <h4>Análise Comportamental Profunda</h4>
+            <p>A IA mapeia seus hábitos de consumo e identifica padrões que você nunca percebeu — e te mostra como quebrá-los.</p>
+          </div>
+        </div>
+        <div class="raiox-pill reveal">
+          <div class="raiox-pill-icon">📈</div>
+          <div>
+            <h4>Score de Ascensão</h4>
+            <p>Um número único que mede sua saúde financeira e evolução mês a mês. Gamificação com propósito real.</p>
+          </div>
+        </div>
+        <div class="raiox-pill reveal">
+          <div class="raiox-pill-icon">🤖</div>
+          <div>
+            <h4>Relatórios Gerados por IA</h4>
+            <p>Toda semana, um relatório personalizado com o que mudou, o que melhorou e o que precisa de atenção.</p>
+          </div>
+        </div>
+        <div class="raiox-pill reveal">
+          <div class="raiox-pill-icon">🎙️</div>
+          <div>
+            <h4>Chat com sua IA Financeira</h4>
+            <p>"Quanto posso gastar essa semana?" "Quando vou atingir minha meta?" Pergunte. A IA responde.</p>
+          </div>
+        </div>
+      </div>
+
+      <a href="/raio-x/" class="btn-primary" style="display:inline-block;margin-top:2rem;text-decoration:none;">🔬 Experimentar Raio-X Financeiro Grátis →</a>
+    </div>
+
+    <div class="raiox-screen-wrap">
+      <div class="raiox-mockup float" style="animation-delay:0.5s;">
+        <div class="raiox-mockup-header">
+          <div class="raiox-mock-title">📡 RAIO-X FINANCEIRO</div>
+          <div class="raiox-mock-badge">AO VIVO</div>
+        </div>
+
+        <div style="font-size:0.68rem;color:var(--muted);margin-bottom:8px;">Score de Ascensão™</div>
+        <div class="score-ring">
+          <div class="score-circle">
+            <div class="score-inner">
+              <div class="score-val">78</div>
+              <div class="score-lbl">Score</div>
+            </div>
+          </div>
+        </div>
+        <div style="text-align:center;font-size:0.7rem;color:var(--green);margin-bottom:12px;">↑ +12 pontos este mês</div>
+
+        <div class="insight-row">
+          <div class="insight-chip">
+            <div class="ic-label">Receita</div>
+            <div class="ic-val ic-green">R$ 5.400</div>
+          </div>
+          <div class="insight-chip">
+            <div class="ic-label">Gastos</div>
+            <div class="ic-val ic-red">R$ 3.820</div>
+          </div>
+          <div class="insight-chip">
+            <div class="ic-label">Investido</div>
+            <div class="ic-val ic-cyan">R$ 820</div>
+          </div>
+        </div>
+
+        <div class="ai-insight-box">
+          <div class="ai-tag">⚡ Insight Ascen IA</div>
+          <div class="ai-text">Você está no ritmo certo. Se mantiver o padrão desta semana, sua reserva de emergência fica completa em <strong style="color:var(--cyan)">47 dias</strong>. Continue.</div>
+        </div>
+
+        <div style="margin-top:14px;">
+          <div style="font-size:0.62rem;color:var(--muted);margin-bottom:8px;letter-spacing:0.06em;text-transform:uppercase;">Maior gasto da semana</div>
+          <div style="display:flex;flex-direction:column;gap:6px;">
+            <div style="display:flex;align-items:center;gap:8px;font-size:0.7rem;">
+              <div style="flex:1;">🍔 Alimentação</div>
+              <div style="height:6px;flex:2;background:rgba(255,255,255,0.07);border-radius:3px;overflow:hidden;"><div style="height:100%;width:62%;background:var(--cyan);border-radius:3px;"></div></div>
+              <div style="color:var(--muted);">62%</div>
+            </div>
+            <div style="display:flex;align-items:center;gap:8px;font-size:0.7rem;">
+              <div style="flex:1;">🚗 Transporte</div>
+              <div style="height:6px;flex:2;background:rgba(255,255,255,0.07);border-radius:3px;overflow:hidden;"><div style="height:100%;width:23%;background:var(--green);border-radius:3px;"></div></div>
+              <div style="color:var(--muted);">23%</div>
+            </div>
+            <div style="display:flex;align-items:center;gap:8px;font-size:0.7rem;">
+              <div style="flex:1;">📺 Lazer</div>
+              <div style="height:6px;flex:2;background:rgba(255,255,255,0.07);border-radius:3px;overflow:hidden;"><div style="height:100%;width:15%;background:var(--red);border-radius:3px;"></div></div>
+              <div style="color:var(--muted);">15%</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ────────── PREÇOS ────────── -->
+<section class="pricing-section" id="precos">
+  <div class="centered">
+    <div class="section-tag">💎 Planos</div>
+    <h2 class="section-title">Quanto custa mudar de patamar?</h2>
+    <p class="section-sub">Menos do que você gasta em café por mês. Muito menos do que custa continuar parado.</p>
+    <div class="pricing-urgency">
+      🔥 Preço de lançamento por tempo limitado · Garanta agora
+    </div>
+  </div>
+
+  <div class="pricing-grid">
+    <div class="price-card reveal">
+      <div class="price-plan">Free</div>
+      <div class="price-value" style="color:var(--muted);">R$ 0</div>
+      <div class="price-period">para sempre</div>
+
+      <div class="price-divider"></div>
+
+      <ul class="price-features">
+        <li><span class="feat-check">✓</span> Dashboard básico</li>
+        <li><span class="feat-check">✓</span> Registro de transações</li>
+        <li><span class="feat-check">✓</span> Categorias padrão</li>
+        <li><span class="feat-x">✕</span> <span class="feat-muted">Raio-X IA</span></li>
+        <li><span class="feat-x">✕</span> <span class="feat-muted">Score de Ascensão</span></li>
+        <li><span class="feat-x">✕</span> <span class="feat-muted">Chat com IA</span></li>
+        <li><span class="feat-x">✕</span> <span class="feat-muted">Relatórios semanais</span></li>
+      </ul>
+
+      <button class="btn-plan btn-plan-secondary" onclick="window.location.href='#waitlist'">Começar Grátis</button>
+    </div>
+
+    <div class="price-card featured reveal">
+      <div class="best-badge">✦ Melhor Escolha</div>
+      <div class="price-plan" style="color:var(--cyan);">Ascen Pro · Anual</div>
+      <div class="price-value" style="color:var(--white);">R$ 23<span style="font-size:1.4rem;font-weight:500;">,25</span></div>
+      <div class="price-period">por mês · <span style="text-decoration:line-through;color:var(--muted);">R$ 29,90</span> cobrado R$ 279/ano</div>
+      <span class="price-economy">🎉 Economize R$ 79,80 por ano</span>
+
+      <div class="price-divider"></div>
+
+      <ul class="price-features">
+        <li><span class="feat-check">✓</span> Tudo do Free, mais:</li>
+        <li><span class="feat-check">✓</span> <strong>Raio-X Financeiro IA</strong></li>
+        <li><span class="feat-check">✓</span> Score de Ascensão™</li>
+        <li><span class="feat-check">✓</span> Chat com IA ilimitado</li>
+        <li><span class="feat-check">✓</span> Relatórios semanais</li>
+        <li><span class="feat-check">✓</span> Alertas preditivos</li>
+        <li><span class="feat-check">✓</span> Metas inteligentes</li>
+      </ul>
+
+      <button class="btn-plan btn-plan-primary" onclick="window.location.href='#waitlist'">⚡ Garantir Meu Pro Anual</button>
+    </div>
+  </div>
+
+  <p style="text-align:center;font-size:0.8rem;color:var(--muted);margin-top:1.5rem;">
+    Também disponível R$ 29,90/mês · Cancele quando quiser · Sem fidelidade
+  </p>
+</section>
+
+<!-- ────────── DEPOIMENTOS ────────── -->
+<section class="testimonials-section" id="depoimentos">
+  <div class="centered">
+    <div class="section-tag">💬 Primeiros Usuários</div>
+    <h2 class="section-title">Quem já entrou não quer mais sair.</h2>
+  </div>
+
+  <div class="testimonials-grid" style="max-width:1100px;margin:3rem auto 0;">
+    <div class="testimonial-card reveal">
+      <div class="stars">★★★★★</div>
+      <p class="testimonial-text">"Em 3 semanas de beta, já identifiquei R$ 480 de gastos que eu nem sabia que tinha. O chat com a IA é absurdamente útil — pergunto tudo e ela responde com contexto real dos meus dados."</p>
+      <div class="testimonial-author">
+        <div class="author-avatar" style="background:linear-gradient(135deg,#00F5FF,#0A2540);">RM</div>
+        <div>
+          <div class="author-name">Rafael M.</div>
+          <div class="author-detail">Desenvolvedor · São Paulo</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="testimonial-card reveal">
+      <div class="stars">★★★★★</div>
+      <p class="testimonial-text">"Nunca tive controle financeiro de verdade. O Ascen mudou isso em duas semanas. O Score de Ascensão virou um game pra mim — fico querendo subir minha pontuação todo mês."</p>
+      <div class="testimonial-author">
+        <div class="author-avatar" style="background:linear-gradient(135deg,#22C55E,#0A2540);">JA</div>
+        <div>
+          <div class="author-name">Juliana A.</div>
+          <div class="author-detail">Designer · Florianópolis</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="testimonial-card reveal">
+      <div class="stars">★★★★★</div>
+      <p class="testimonial-text">"O Raio-X me mostrou que eu comprometia 41% da renda com parcelas sem perceber. Em 2 meses segui o plano da IA e reduci pra 22%. Eu precisava ver isso há anos."</p>
+      <div class="testimonial-author">
+        <div class="author-avatar" style="background:linear-gradient(135deg,#F59E0B,#0A2540);">CS</div>
+        <div>
+          <div class="author-name">Carlos S.</div>
+          <div class="author-detail">Empreendedor · Belo Horizonte</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="testimonial-card reveal">
+      <div class="stars">★★★★★</div>
+      <p class="testimonial-text">"Já testei 6 apps de finanças. O Ascen é o único que eu uso todo dia. A diferença é que ele fala comigo, não só mostra gráfico. Parece um consultor financeiro no bolso."</p>
+      <div class="testimonial-author">
+        <div class="author-avatar" style="background:linear-gradient(135deg,#A78BFA,#0A2540);">PR</div>
+        <div>
+          <div class="author-name">Patrícia R.</div>
+          <div class="author-detail">Analista Financeira · Rio de Janeiro</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ────────── FAQ ────────── -->
+<section class="faq-section" id="faq">
+  <div class="centered">
+    <div class="section-tag">❓ Perguntas Frequentes</div>
+    <h2 class="section-title">Sem enrolação. Respostas diretas.</h2>
+  </div>
+
+  <div class="faq-list">
+    <div class="faq-item">
+      <button class="faq-question" onclick="toggleFAQ(this)">
+        O Ascen já está disponível?
+        <span class="faq-arrow">▼</span>
+      </button>
+      <div class="faq-answer">O Ascen está em fase beta fechado e será lançado em breve na Play Store. Quem entrar na lista VIP agora garante acesso antecipado + bônus exclusivos de lançamento antes de todo mundo.</div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question" onclick="toggleFAQ(this)">
+        Meus dados financeiros ficam seguros?
+        <span class="faq-arrow">▼</span>
+      </button>
+      <div class="faq-answer">100%. Usamos criptografia de ponta a ponta, armazenamento seguro em nuvem e nunca vendemos ou compartilhamos seus dados. Sua vida financeira é absolutamente privada.</div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question" onclick="toggleFAQ(this)">
+        Preciso conectar minha conta bancária?
+        <span class="faq-arrow">▼</span>
+      </button>
+      <div class="faq-answer">Não. Você registra suas transações manualmente ou via importação. Não pedimos acesso à sua conta bancária — o controle é sempre seu.</div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question" onclick="toggleFAQ(this)">
+        Posso cancelar o Pro a qualquer momento?
+        <span class="faq-arrow">▼</span>
+      </button>
+      <div class="faq-answer">Sim, sem burocracia. O cancelamento é feito diretamente no app em menos de 30 segundos. Sem multa, sem fidelidade, sem enrolação.</div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question" onclick="toggleFAQ(this)">
+        A IA realmente funciona ou é só marketing?
+        <span class="faq-arrow">▼</span>
+      </button>
+      <div class="faq-answer">Funciona de verdade. Nossa IA analisa seus dados reais, identifica padrões, prevê riscos e entrega insights personalizados. Não é um chatbot genérico — ela conhece seus números e fala especificamente sobre você.</div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question" onclick="toggleFAQ(this)">
+        O plano Free tem alguma limitação importante?
+        <span class="faq-arrow">▼</span>
+      </button>
+      <div class="faq-answer">O Free é ótimo pra começar — você já tem controle básico e histórico de gastos. Mas os diferenciais reais do Ascen (Raio-X IA, Score de Ascensão, Chat com IA, alertas preditivos) estão disponíveis apenas no Pro.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ────────── WAITLIST CTA ────────── -->
+<section class="waitlist-section" id="waitlist">
+  <div class="waitlist-inner">
+    <div class="section-tag">🚀 Lista VIP</div>
+    <h2 class="section-title" style="font-size:clamp(2rem,4vw,2.8rem);">Seu futuro financeiro começa aqui.<br/><span style="color:var(--cyan)">E começa agora.</span></h2>
+    <p class="section-sub" style="margin:1rem auto 0;">Entre na lista VIP e garanta: <strong style="color:var(--white);">acesso antecipado + 3 meses de Pro grátis + suporte prioritário.</strong></p>
+
+    <div id="success-msg" class="form-success">
+      ✅ <strong>Você está na lista VIP!</strong> Fique de olho no seu e-mail — vamos te contatar antes de todo mundo quando o Ascen abrir.
+    </div>
+
+    <form class="waitlist-form" id="waitlist-form" onsubmit="submitWaitlist(event)">
+      <div class="form-row">
+        <input type="text" class="form-input" id="wl-name" placeholder="Seu nome" required />
+        <input type="email" class="form-input" id="wl-email" placeholder="Seu melhor e-mail" required />
+      </div>
+      <button type="submit" class="form-submit" id="submit-btn">
+        ⚡ Entrar na Lista VIP Agora — É Grátis
+      </button>
+      <p class="form-note">🔒 Sem spam. Você pode sair quando quiser. Seus dados estão protegidos.</p>
+    </form>
+  </div>
+</section>
+
+<!-- ────────── FOOTER ────────── -->
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div class="footer-logo">VAL<span>TUN</span></div>
+      <div class="footer-tagline">Sua ascensão financeira começa aqui.</div>
+    </div>
+
+    <div class="footer-links">
+      <a href="#ascen">Ascen</a>
+      <a href="#raiox">Raio-X</a>
+      <a href="#precos">Preços</a>
+      <a href="#">Blog</a>
+      <a href="/privacidade.html">Política de Privacidade</a>
+      <a href="mailto:contato@valtun.com.br">contato@valtun.com.br</a>
+    </div>
+  </div>
+
+  <div class="footer-copy">
+    © 2025 Valtun Tecnologia LTDA. CNPJ: 00.000.000/0001-00 · Todos os direitos reservados.<br/>
+    O Ascen não é um serviço de consultoria financeira regulamentado. As funcionalidades de IA são ferramentas de apoio à organização financeira pessoal.
+  </div>
+</footer>
+
+
+<script>
+  window.VALTUN_SUPABASE = {
+    url: '%VITE_SUPABASE_URL%',
+    key: '%VITE_SUPABASE_ANON_KEY%'
+  };
+</script>
+<script src="/ascen-landing.js"></script>
+</body>
 </html>

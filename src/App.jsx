@@ -30,6 +30,12 @@ export default function App() {
   return (
     <div className="min-h-screen bg-[#0f172a] text-slate-200 p-6 font-sans">
       <div className="max-w-4xl mx-auto">
+        <a
+          href="/"
+          className="inline-block text-sm text-slate-500 hover:text-slate-300 mb-6 transition"
+        >
+          ← Valtun / Ascen
+        </a>
         {!result?.free && (
           <>
             <Hero scrollToUpload={scrollToUpload} />
