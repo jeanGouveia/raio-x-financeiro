@@ -12,96 +12,117 @@ export async function parseExcel(file) {
     const rows = XLSX.utils.sheet_to_json(worksheet, {
       header: 1,
       defval: "",
-      blankrows: true,
-      raw: true
+      blankrows: false,
+      raw: true,
     });
 
-    // === MELHORIA: Busca mais inteligente do cabeçalho ===
+    if (!rows || rows.length < 2) {
+      throw new Error("A planilha está vazia ou tem menos de 2 linhas.");
+    }
+
+    // Busca inteligente do cabeçalho
     let headerIndex = -1;
-
-    for (let i = 0; i < rows.length; i++) {
+    for (let i = 0; i < Math.min(rows.length, 20); i++) {
       const row = rows[i];
-      if (!Array.isArray(row)) continue;
+      if (!Array.isArray(row) || row.length === 0) continue;
+      const rowStr = row.map(c => String(c ?? "").toLowerCase().trim()).join(" ");
 
-      const rowStr = row.map(cell => String(cell || "").toLowerCase().trim()).join(" ");
-
-      // Procura por combinações comuns de cabeçalho
       if (
-        (rowStr.includes("data") || rowStr.includes("dia")) &&
-        (rowStr.includes("descrição") || rowStr.includes("descricao") || rowStr.includes("description")) &&
-        (rowStr.includes("categoria") || rowStr.includes("category")) &&
-        (rowStr.includes("tipo") || rowStr.includes("type")) &&
-        (rowStr.includes("valor") || rowStr.includes("value"))
+        (rowStr.includes("data") || rowStr.includes("dia") || rowStr.includes("date")) &&
+        (rowStr.includes("valor") || rowStr.includes("value") || rowStr.includes("montante") || rowStr.includes("amount"))
       ) {
         headerIndex = i;
         break;
       }
+    }
 
-      // Alternativa mais flexível: procura por "data" + "valor"
-      if (rowStr.includes("data") && rowStr.includes("valor")) {
-        headerIndex = i;
-        break;
+    // Fallback: primeira linha não-vazia com pelo menos 3 células
+    if (headerIndex === -1) {
+      for (let i = 0; i < rows.length; i++) {
+        if (Array.isArray(rows[i]) && rows[i].filter(c => c !== "").length >= 3) {
+          headerIndex = i;
+          break;
+        }
       }
     }
 
     if (headerIndex === -1) {
       throw new Error(
         "Não foi possível encontrar o cabeçalho da tabela.\n\n" +
-        "Sua planilha deve ter uma linha com as colunas:\n" +
+        "Sua planilha deve ter colunas como:\n" +
         "DATA | DESCRIÇÃO | CATEGORIA | TIPO | VALOR\n\n" +
-        "Use o modelo oficial ou ajuste o cabeçalho."
+        "Baixe o modelo oficial para garantir compatibilidade."
       );
     }
 
-    const tableRows = rows.slice(headerIndex);
-    const headers = tableRows[0].map(h => 
-      String(h || "").trim().toLowerCase().replace(/\s+/g, "")
-    );
+    const headerRow = rows[headerIndex];
+    const headers = headerRow.map(h => String(h ?? "").trim().toLowerCase().replace(/\s+/g, ""));
 
-    // Mapeia colunas de forma mais tolerante
     const col = {
-      data: headers.findIndex(h => /data|dia|date/.test(h)),
-      descricao: headers.findIndex(h => /descri|description/.test(h)),
+      data:      headers.findIndex(h => /^(data|dia|date)/.test(h)),
+      descricao: headers.findIndex(h => /descri|description|desc/.test(h)),
       categoria: headers.findIndex(h => /categoria|category|cat/.test(h)),
-      tipo: headers.findIndex(h => /tipo|type|mov/.test(h)),
-      valor: headers.findIndex(h => /valor|value|montante|amount/.test(h)),
+      tipo:      headers.findIndex(h => /^(tipo|type|mov|movement)/.test(h)),
+      valor:     headers.findIndex(h => /valor|value|montante|amount/.test(h)),
     };
 
     if (col.valor === -1) {
-      throw new Error("Coluna 'VALOR' não encontrada.");
+      throw new Error(
+        `Coluna 'VALOR' não encontrada.\n` +
+        `Cabeçalhos detectados: ${headers.join(", ")}\n\n` +
+        `Use o modelo oficial para garantir compatibilidade.`
+      );
     }
 
-    // Converte para transações
-    const transactions = tableRows.slice(1)
-      .filter(row => row && row.length > col.valor && row[col.valor] != null)
-      .map(row => ({
-        data: row[col.data] || "",
-        descricao: row[col.descricao] || "",
-        categoria: row[col.categoria] || "Outros",
-        tipo: row[col.tipo] || "",
-        valor: parseFloat(
-          String(row[col.valor])
-            .replace(/R\$|\s/g, "")
-            .replace(",", ".")
-        ) || 0
-      }))
-      .filter(t => !isNaN(t.valor) && t.valor !== 0);
+    const dataRows = rows.slice(headerIndex + 1);
+
+    const transactions = dataRows
+      .filter(row => Array.isArray(row) && row.length > col.valor && row[col.valor] != null && row[col.valor] !== "")
+      .map(row => {
+        // Normaliza a data
+        let data = row[col.data] ?? "";
+        if (data instanceof Date) {
+          data = data.toISOString().split("T")[0];
+        } else {
+          data = String(data);
+        }
+
+        // Normaliza o valor — aceita vírgula ou ponto como decimal
+        const rawValor = String(row[col.valor] ?? "")
+          .replace(/R\$|\s/g, "")
+          .replace(/\./g, (m, offset, str) => {
+            // Se tem vírgula, o ponto é separador de milhar
+            return str.includes(",") ? "" : m;
+          })
+          .replace(",", ".");
+        const valor = parseFloat(rawValor) || 0;
+
+        return {
+          data,
+          descricao:  col.descricao  >= 0 ? String(row[col.descricao]  ?? "") : "",
+          categoria:  col.categoria  >= 0 ? String(row[col.categoria]  ?? "Outros") : "Outros",
+          tipo:       col.tipo       >= 0 ? String(row[col.tipo]       ?? "") : "",
+          valor,
+        };
+      })
+      .filter(t => t.valor !== 0 && !isNaN(t.valor));
 
     if (transactions.length === 0) {
-      throw new Error("Nenhuma transação válida foi encontrada na planilha.");
+      throw new Error(
+        "Nenhuma transação válida encontrada.\n\n" +
+        "Verifique se:\n" +
+        "• A coluna VALOR contém números\n" +
+        "• Há pelo menos uma linha de dados abaixo do cabeçalho\n" +
+        "• O arquivo não está em branco"
+      );
     }
 
-    // Análise
-    const analysis = FinancialAnalyzer.analyze(transactions);
+    const analysis = await FinancialAnalyzer.analyze(transactions);
 
-    return {
-      transactions,
-      analysis,
-      summary: analysis.summary
-    };
+    return { transactions, analysis, summary: analysis.summary };
 
   } catch (err) {
     console.error("Erro no parser:", err);
-    throw err;
+    throw err instanceof Error ? err : new Error(String(err));
   }
 }
