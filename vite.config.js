@@ -7,9 +7,7 @@ export default defineConfig({
   build: {
     rollupOptions: {
       input: {
-        main:        resolve(__dirname, 'index.html'),
-        raiox:       resolve(__dirname, 'raio-x/index.html'),
-        privacidade: resolve(__dirname, 'privacidade.html'),
+        raiox: resolve(__dirname, 'raio-x/index.html'),
       },
     },
   },
