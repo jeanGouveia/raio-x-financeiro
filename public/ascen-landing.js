@@ -20,72 +20,6 @@
 
   document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-  /* ─── FAQ ─── */
-  function toggleFAQ(btn) {
-    const item = btn.parentElement;
-    const isOpen = item.classList.contains('open');
-    document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
-    if (!isOpen) item.classList.add('open');
-  }
-
-  /* ─── WAITLIST FORM (Supabase) ─── */
-  async function submitWaitlist(e) {
-    e.preventDefault();
-
-    const name = document.getElementById('wl-name').value.trim();
-    const email = document.getElementById('wl-email').value.trim();
-    const btn = document.getElementById('submit-btn');
-
-    if (!name || !email) return;
-
-    btn.disabled = true;
-    btn.textContent = 'Enviando...';
-
-    try {
-      const { url: SUPABASE_URL, key: SUPABASE_ANON_KEY } = window.VALTUN_SUPABASE || {};
-      if (!SUPABASE_URL || !SUPABASE_ANON_KEY) throw new Error('Supabase não configurado');
-
-      const response = await fetch(`${SUPABASE_URL}/rest/v1/waitlist`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'apikey': SUPABASE_ANON_KEY,
-          'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
-          'Prefer': 'return=minimal'
-        },
-        body: JSON.stringify({
-          name,
-          email,
-          created_at: new Date().toISOString(),
-          source: 'landing_page'
-        })
-      });
-
-      if (response.ok || response.status === 201) {
-        document.getElementById('waitlist-form').style.display = 'none';
-        document.getElementById('success-msg').style.display = 'block';
-      } else {
-        const err = await response.json();
-        // Email duplicado
-        if (err?.code === '23505') {
-          btn.textContent = '✅ Você já está na lista!';
-          btn.style.background = 'var(--green)';
-        } else {
-          throw new Error('Erro ao salvar');
-        }
-      }
-    } catch (error) {
-      console.error('Waitlist error:', error);
-      btn.disabled = false;
-      btn.textContent = '⚡ Tentar Novamente';
-      btn.style.background = 'var(--red)';
-      setTimeout(() => {
-        btn.style.background = 'var(--cyan)';
-        btn.textContent = '⚡ Entrar na Lista VIP Agora — É Grátis';
-      }, 3000);
-    }
-  }
-
   /* ─── SMOOTH ANCHOR ─── */
   document.querySelectorAll('a[href^="#"]').forEach(a => {
     a.addEventListener('click', e => {
@@ -98,12 +32,3 @@
       }
     });
   });
-
-  /* ─── BAR ANIMATION ─── */
-  const bars = document.querySelectorAll('.phone-bar');
-  setInterval(() => {
-    bars.forEach(bar => {
-      const h = Math.floor(Math.random() * 60 + 30);
-      bar.style.height = h + '%';
-    });
-  }, 2000);
