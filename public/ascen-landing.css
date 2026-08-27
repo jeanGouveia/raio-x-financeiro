@@ -876,6 +876,59 @@
     }
     .service-cta:hover { color: var(--cyan); }
 
+    .service-desc-short {
+      color: var(--muted);
+      font-size: 0.95rem;
+      line-height: 1.6;
+      margin-bottom: 1rem;
+    }
+
+    .service-scope {
+      list-style: none;
+      padding: 0;
+      margin: 1rem 0;
+    }
+
+    .scope-item {
+      color: var(--muted);
+      font-size: 0.85rem;
+      line-height: 1.5;
+      padding: 0.25rem 0;
+      padding-left: 1.2rem;
+      position: relative;
+    }
+
+    .scope-item::before {
+      content: '✓';
+      position: absolute;
+      left: 0;
+      color: var(--cyan);
+      font-size: 0.75rem;
+    }
+
+    .service-note {
+      color: var(--muted);
+      font-size: 0.85rem;
+      line-height: 1.5;
+      margin: 1rem 0;
+      font-style: italic;
+    }
+
+    .service-note-sm {
+      color: var(--muted);
+      font-size: 0.75rem;
+      line-height: 1.4;
+      margin: 0.5rem 0 1rem 0;
+      opacity: 0.8;
+    }
+
+    .product-desc-sm {
+      color: var(--muted);
+      font-size: 0.85rem;
+      line-height: 1.5;
+      margin-top: 0.5rem;
+    }
+
     /* ─── QUICK SOLUTIONS SECTION ─────────────────── */
     .quick-solutions-section {
       padding: 6rem clamp(1.5rem,5vw,4rem);

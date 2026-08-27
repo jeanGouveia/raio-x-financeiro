@@ -32,3 +32,23 @@
       }
     });
   });
+
+  /* ─── WHATSAPP MESSAGE DIFFERENTIATION ─── */
+  const whatsappMessages = {
+    'site-express': 'Olá! Vi o Site Express da Valtun e gostaria de criar um site para meu negócio.',
+    'sistemas': 'Olá! Vi a Valtun e tenho um processo no meu negócio que gostaria de melhorar com um sistema.',
+    'aplicativos': 'Olá! Vi a Valtun e gostaria de conversar sobre o desenvolvimento de um aplicativo.',
+    'automacao': 'Olá! Vi a Valtun e gostaria de automatizar um processo do meu negócio.',
+    'explicar-problema': 'Olá! Vi a Valtun e gostaria de explicar um problema do meu negócio para entender se existe uma solução digital.',
+    'generic': 'Olá! Vi o site da Valtun e gostaria de conversar sobre uma solução digital para meu negócio.'
+  };
+
+  document.querySelectorAll('[data-whatsapp]').forEach(el => {
+    el.addEventListener('click', e => {
+      const type = el.getAttribute('data-whatsapp');
+      const message = whatsappMessages[type] || whatsappMessages['generic'];
+      const whatsappNumber = '5573999773736';
+      const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+      window.open(whatsappUrl, '_blank');
+    });
+  });
