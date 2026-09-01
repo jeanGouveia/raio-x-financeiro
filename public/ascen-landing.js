@@ -35,11 +35,10 @@
 
   /* ─── WHATSAPP MESSAGE DIFFERENTIATION ─── */
   const whatsappMessages = {
-    'site-express': 'Olá! Vi o Site Express da Valtun e gostaria de criar um site para meu negócio.',
-    'sistemas': 'Olá! Vi a Valtun e tenho um processo no meu negócio que gostaria de melhorar com um sistema.',
-    'aplicativos': 'Olá! Vi a Valtun e gostaria de conversar sobre o desenvolvimento de um aplicativo.',
-    'automacao': 'Olá! Vi a Valtun e gostaria de automatizar um processo do meu negócio.',
-    'explicar-problema': 'Olá! Vi a Valtun e gostaria de explicar um problema do meu negócio para entender se existe uma solução digital.',
+    'site-express': 'Olá! Vi o Site Express da Valtun e gostaria de saber mais.',
+    'sistemas': 'Olá! Tenho um processo na minha empresa que gostaria de transformar em sistema.',
+    'automacao': 'Olá! Gostaria de conversar sobre automação para minha empresa.',
+    'explicar-problema': 'Olá! Tenho um problema específico no meu negócio e gostaria de entender se existe uma solução digital.',
     'generic': 'Olá! Vi o site da Valtun e gostaria de conversar sobre uma solução digital para meu negócio.'
   };
 
