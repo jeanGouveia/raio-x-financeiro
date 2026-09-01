@@ -39,6 +39,8 @@
     'sistemas': 'Olá! Tenho um processo na minha empresa que gostaria de transformar em sistema.',
     'automacao': 'Olá! Gostaria de conversar sobre automação para minha empresa.',
     'explicar-problema': 'Olá! Tenho um problema específico no meu negócio e gostaria de entender se existe uma solução digital.',
+    'horizongest': 'Olá! Vi o HorizonGest no site da Valtun e gostaria de saber mais sobre o projeto.',
+    'ascen': 'Olá! Vi o Ascen no site da Valtun e gostaria de saber mais sobre o aplicativo.',
     'generic': 'Olá! Vi o site da Valtun e gostaria de conversar sobre uma solução digital para meu negócio.'
   };
 

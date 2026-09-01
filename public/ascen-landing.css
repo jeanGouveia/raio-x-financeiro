@@ -1045,6 +1045,117 @@
       border-color: var(--cyan);
     }
 
+    /* ─── DEMOS SECTION ───────────────────────── */
+    .demos-section {
+      padding: 6rem clamp(1.5rem,5vw,4rem);
+      background: rgba(10,37,64,0.2);
+    }
+
+    .demos-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 2rem;
+      margin: 3rem 0;
+    }
+
+    .demo-card {
+      background: rgba(255,255,255,0.02);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 1.5rem;
+      transition: all 0.3s ease;
+    }
+
+    .demo-card:hover {
+      border-color: var(--cyan);
+      transform: translateY(-5px);
+    }
+
+    .demo-badge {
+      display: inline-block;
+      background: rgba(0,245,255,0.1);
+      border: 1px solid rgba(0,245,255,0.3);
+      border-radius: 20px;
+      padding: 0.25rem 0.75rem;
+      font-size: 0.75rem;
+      color: var(--cyan);
+      margin-bottom: 1rem;
+    }
+
+    .demo-preview {
+      background: rgba(3,11,24,0.8);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.5rem;
+    }
+
+    .demo-header {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--white);
+      margin-bottom: 0.5rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .demo-nav {
+      font-size: 0.75rem;
+      color: var(--muted);
+      margin-bottom: 1rem;
+    }
+
+    .demo-hero {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 1rem;
+      line-height: 1.3;
+    }
+
+    .demo-content {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .demo-item {
+      font-size: 0.85rem;
+      color: var(--muted);
+      padding: 0.25rem 0;
+    }
+
+    .demo-cta {
+      display: inline-block;
+      background: rgba(0,245,255,0.1);
+      border: 1px solid rgba(0,245,255,0.3);
+      border-radius: 8px;
+      padding: 0.5rem 1rem;
+      font-size: 0.85rem;
+      color: var(--cyan);
+      font-weight: 500;
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+
+    .demo-cta:hover {
+      background: rgba(0,245,255,0.2);
+      border-color: var(--cyan);
+    }
+
+    .demo-note {
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.8rem;
+      line-height: 1.5;
+      margin-top: 2rem;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
     /* ─── QUICK SOLUTIONS SECTION ─────────────────── */
     .quick-solutions-section {
       padding: 6rem clamp(1.5rem,5vw,4rem);
@@ -1301,7 +1412,8 @@
       .pain-solution-grid,
       .different-grid,
       .products-grid,
-      .site-express-grid {
+      .site-express-grid,
+      .demos-grid {
         grid-template-columns: 1fr;
       }
 
