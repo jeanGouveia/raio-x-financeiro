@@ -35,7 +35,7 @@
 
   /* ─── WHATSAPP MESSAGE DIFFERENTIATION ─── */
   const whatsappMessages = {
-    'site-express': 'Olá! Vi o Site Express da Valtun e gostaria de saber mais.',
+    'site-express': 'Olá! Vi o site profissional da Valtun e gostaria de saber mais.',
     'sistemas': 'Olá! Tenho um processo na minha empresa que gostaria de transformar em sistema.',
     'automacao': 'Olá! Gostaria de conversar sobre automação para minha empresa.',
     'explicar-problema': 'Olá! Tenho um problema específico no meu negócio e gostaria de entender se existe uma solução digital.',

@@ -1156,6 +1156,212 @@
       margin-right: auto;
     }
 
+    /* ─── CONTENT PAGE STYLES ─────────────────────── */
+    .content-hero {
+      min-height: 50vh;
+    }
+
+    .breadcrumbs {
+      padding: 1.5rem clamp(1.5rem,5vw,4rem);
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+
+    .breadcrumbs a {
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+
+    .breadcrumbs a:hover {
+      color: var(--cyan);
+    }
+
+    .breadcrumbs .separator {
+      margin: 0 0.5rem;
+    }
+
+    .breadcrumbs .current {
+      color: var(--white);
+    }
+
+    .content-index-section {
+      padding: 4rem clamp(1.5rem,5vw,4rem);
+    }
+
+    .content-empty {
+      text-align: center;
+      max-width: 600px;
+      margin: 3rem auto;
+      padding: 3rem 2rem;
+      background: rgba(255,255,255,0.02);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+    }
+
+    .empty-icon {
+      font-size: 3rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .content-empty h3 {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 1rem;
+    }
+
+    .content-empty p {
+      color: var(--muted);
+      line-height: 1.6;
+      margin-bottom: 1rem;
+    }
+
+    .content-topics-list {
+      text-align: left;
+      margin: 1.5rem 0;
+      padding-left: 1.5rem;
+      color: var(--muted);
+    }
+
+    .content-topics-list li {
+      margin-bottom: 0.75rem;
+    }
+
+    .empty-note {
+      font-size: 0.85rem;
+      margin-top: 2rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .categories-section {
+      padding: 6rem clamp(1.5rem,5vw,4rem);
+      background: rgba(10,37,64,0.1);
+    }
+
+    .categories-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+      margin: 3rem 0;
+    }
+
+    .category-card {
+      background: rgba(255,255,255,0.02);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 2rem;
+      transition: all 0.3s ease;
+    }
+
+    .category-card:hover {
+      border-color: var(--cyan);
+      transform: translateY(-3px);
+    }
+
+    .category-icon {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+
+    .category-card h3 {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--white);
+      margin-bottom: 0.75rem;
+    }
+
+    .category-card p {
+      color: var(--muted);
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+
+    .content-cta-section {
+      padding: 6rem clamp(1.5rem,5vw,4rem);
+      text-align: center;
+      background: rgba(0,245,255,0.05);
+    }
+
+    .content-cta-section .section-title {
+      margin-bottom: 1rem;
+    }
+
+    .content-cta-section .section-sub {
+      margin-bottom: 2rem;
+    }
+
+    /* ─── ARTICLE CARDS ───────────────────────────── */
+    .articles-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 2rem;
+      margin: 3rem 0;
+    }
+
+    .article-card {
+      background: rgba(255,255,255,0.02);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 2rem;
+      transition: all 0.3s ease;
+    }
+
+    .article-card:hover {
+      border-color: var(--cyan);
+      transform: translateY(-3px);
+    }
+
+    .article-link {
+      text-decoration: none;
+      color: inherit;
+      display: block;
+    }
+
+    .article-category {
+      display: inline-block;
+      background: rgba(0,245,255,0.1);
+      border: 1px solid rgba(0,245,255,0.3);
+      border-radius: 20px;
+      padding: 0.25rem 0.75rem;
+      font-size: 0.75rem;
+      color: var(--cyan);
+      margin-bottom: 1rem;
+    }
+
+    .article-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--white);
+      margin-bottom: 0.75rem;
+      line-height: 1.3;
+    }
+
+    .article-excerpt {
+      color: var(--muted);
+      font-size: 0.9rem;
+      line-height: 1.5;
+      margin-bottom: 1rem;
+    }
+
+    .article-meta {
+      display: flex;
+      gap: 1rem;
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    .article-date,
+    .article-read-time {
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+    }
+
     /* ─── QUICK SOLUTIONS SECTION ─────────────────── */
     .quick-solutions-section {
       padding: 6rem clamp(1.5rem,5vw,4rem);
