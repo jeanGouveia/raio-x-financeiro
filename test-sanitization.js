@@ -1,21 +1,20 @@
-import { JSDOM } from 'jsdom'
-import createDOMPurify from 'dompurify'
+import sanitizeHtml from 'sanitize-html'
 
-// Create DOMPurify instance with jsdom for Node.js environment
-const window = new JSDOM('').window
-const DOMPurify = createDOMPurify(window)
-
-// Sanitize HTML with DOMPurify (same configuration as production)
+// Sanitize HTML with sanitize-html (same configuration as production)
 function sanitizeHTML(html) {
-  return DOMPurify.sanitize(html, {
-    ALLOWED_TAGS: ['p', 'br', 'strong', 'em', 'u', 'a', 'ul', 'ol', 'li', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'blockquote', 'code', 'pre', 'span', 'div'],
-    ALLOWED_ATTR: ['href', 'title', 'target', 'class', 'id'],
-    ALLOW_DATA_ATTR: false,
-    FORBID_TAGS: ['script', 'iframe', 'object', 'embed', 'form', 'input', 'button', 'svg', 'math'],
-    FORBID_ATTR: ['onerror', 'onload', 'onclick', 'onmouseover', 'onfocus', 'onblur', 'onchange', 'onsubmit', 'ondblclick', 'onmousedown', 'onmouseup', 'onmousemove', 'onmouseout', 'onkeypress', 'onkeydown', 'onkeyup'],
-    FORBID_CSS: new RegExp('expression\\(', 'i'),
-    SANITIZE_DOM: true,
-    KEEP_CONTENT: true
+  return sanitizeHtml(html, {
+    allowedTags: ['p', 'br', 'strong', 'em', 'u', 'a', 'ul', 'ol', 'li', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'blockquote', 'code', 'pre', 'span', 'div'],
+    allowedAttributes: {
+      'a': ['href', 'title', 'target'],
+      '*': ['class', 'id']
+    },
+    allowedSchemes: ['http', 'https', 'mailto'],
+    allowedSchemesByTag: {
+      'a': ['http', 'https', 'mailto']
+    },
+    disallowedTags: ['script', 'iframe', 'object', 'embed', 'form', 'input', 'button', 'svg', 'math'],
+    disallowedAttributes: ['onerror', 'onload', 'onclick', 'onmouseover', 'onfocus', 'onblur', 'onchange', 'onsubmit', 'ondblclick', 'onmousedown', 'onmouseup', 'onmousemove', 'onmouseout', 'onkeypress', 'onkeydown', 'onkeyup'],
+    enforceHtmlBoundary: true
   })
 }
 
