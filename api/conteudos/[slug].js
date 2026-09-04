@@ -93,7 +93,12 @@ export default async function handler(req, res) {
 <body>
   <header class="site-header" id="navbar">
     <div class="container header-inner">
-      <a href="/" class="site-logo">VAL<span>TUN</span></a>
+      <a href="/" class="site-logo">
+        <div class="site-logo-symbol">
+          <img src="/brand/valtun-v.png" alt="V" width="40" height="40" />
+        </div>
+        VAL<span>TUN</span>
+      </a>
 
       <nav class="site-nav">
         <ul class="site-nav-list">
@@ -151,7 +156,12 @@ export default async function handler(req, res) {
     <div class="container">
       <div class="footer-inner">
         <div>
-          <div class="footer-logo">VAL<span>TUN</span></div>
+          <div class="footer-logo">
+            <div class="footer-logo-symbol">
+              <img src="/brand/valtun-v.png" alt="V" width="40" height="40" />
+            </div>
+            VAL<span>TUN</span>
+          </div>
           <div class="footer-tagline">Soluções digitais para empresas</div>
         </div>
 
