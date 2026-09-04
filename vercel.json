@@ -1,6 +1,7 @@
 {
   "rewrites": [
     { "source": "/raio-x",                 "destination": "/raio-x/index.html" },
-    { "source": "/raio-x/((?!assets/).*)", "destination": "/raio-x/index.html" }
+    { "source": "/raio-x/((?!assets/).*)", "destination": "/raio-x/index.html" },
+    { "source": "/conteudos/:slug",        "destination": "/api/article-by-slug/:slug" }
   ]
 }
