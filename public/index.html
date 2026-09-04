@@ -19,20 +19,45 @@
 <body>
 
 <!-- ────────── HEADER ────────── -->
-<header id="navbar">
-  <a href="/" class="nav-logo">VAL<span>TUN</span></a>
-  <nav class="nav-links">
-    <a href="/conteudos/">Conteúdos</a>
-    <a href="#site-express">Site profissional</a>
-    <a href="#servicos">Serviços</a>
-    <a href="#produtos">Produtos</a>
-    <a href="#sobre">Sobre</a>
-    <a href="#contato">Contato</a>
-  </nav>
-  <a href="#contato" class="btn-primary">Solicitar orçamento</a>
-  <button class="nav-mobile-toggle" aria-label="Menu" onclick="toggleNav()">
-    <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h16M3 12h16M3 18h16"/></svg>
-  </button>
+<header class="site-header" id="navbar">
+  <div class="container header-inner">
+    <a href="/" class="site-logo">VAL<span>TUN</span></a>
+
+    <nav class="site-nav">
+      <ul class="site-nav-list">
+        <li><a href="/conteudos/" class="site-nav-link">Conteúdos</a></li>
+        <li><a href="#site-profissional" class="site-nav-link">Site profissional</a></li>
+        <li><a href="#servicos" class="site-nav-link">Serviços</a></li>
+        <li><a href="#produtos" class="site-nav-link">Produtos</a></li>
+        <li><a href="#sobre" class="site-nav-link">Sobre</a></li>
+        <li><a href="#contato" class="site-nav-link">Contato</a></li>
+      </ul>
+    </nav>
+
+    <div class="header-actions">
+      <a href="#contato" class="btn btn-primary">Solicitar orçamento</a>
+      <button class="mobile-menu-toggle" aria-label="Menu" onclick="toggleNav()">
+        <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M3 6h18M3 12h18M3 18h18"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile Menu -->
+  <div class="mobile-menu" id="mobile-menu">
+    <ul class="mobile-menu-list">
+      <li><a href="/conteudos/" class="mobile-menu-link" onclick="toggleNav()">Conteúdos</a></li>
+      <li><a href="#site-profissional" class="mobile-menu-link" onclick="toggleNav()">Site profissional</a></li>
+      <li><a href="#servicos" class="mobile-menu-link" onclick="toggleNav()">Serviços</a></li>
+      <li><a href="#produtos" class="mobile-menu-link" onclick="toggleNav()">Produtos</a></li>
+      <li><a href="#sobre" class="mobile-menu-link" onclick="toggleNav()">Sobre</a></li>
+      <li><a href="#contato" class="mobile-menu-link" onclick="toggleNav()">Contato</a></li>
+    </ul>
+    <div class="mobile-menu-cta">
+      <a href="#contato" class="btn btn-primary" onclick="toggleNav()">Solicitar orçamento</a>
+    </div>
+  </div>
 </header>
 
 <!-- ────────── HERO ────────── -->
@@ -40,343 +65,313 @@
   <div class="hero-bg"></div>
   <div class="hero-grid"></div>
 
-  <div class="hero-content">
-    <div class="hero-badge">
-      <span class="badge-dot"></span>
-      Tecnologia e IA
-    </div>
-
-    <h1>
-      Tecnologia e IA para<br/>
-      fazer seu negócio avançar.
-    </h1>
-
-    <p class="hero-sub">
-      Sites, sistemas, automações e IA para empresas que vendem melhor, organizam processos e trabalham com mais eficiência.
-    </p>
-
-    <div class="hero-ctas">
-      <a href="#contato" class="btn-primary">Quero melhorar meu negócio</a>
-      <a href="#servicos" class="btn-secondary">Conhecer soluções</a>
-    </div>
-
-    <div class="price-highlight">
-      <span class="price-label">Site profissional por</span>
-      <span class="price-value">R$ 490</span>
-    </div>
-  </div>
-
-
-<!-- ────────── SITE PROFISSIONAL DESTAQUE ────────── -->
-<section class="site-express-highlight" id="site-express">
-  <div class="centered">
-    <div class="section-tag">SITE PROFISSIONAL</div>
-    <h2 class="section-title">Seu negócio com presença profissional na internet por R$ 490.</h2>
-    <p class="section-sub">Site profissional de uma página para apresentar sua empresa e facilitar contato com novos clientes.</p>
-
-    <div class="site-express-grid">
-      <div class="se-benefit">
-        <div class="se-icon">📄</div>
-        <h3>Site de uma página</h3>
-        <p>Apresentação, serviços, diferenciais, WhatsApp e localização em layout moderno.</p>
+  <div class="container hero-inner">
+    <div class="hero-content">
+      <div class="hero-eyebrow">
+        <span class="hero-eyebrow-dot"></span>
+        <span class="badge badge-cyan">Tecnologia e IA</span>
       </div>
-      <div class="se-benefit">
-        <div class="se-icon">📱</div>
-        <h3>Funciona em celular</h3>
-        <p>Responsivo para mobile, tablet e desktop.</p>
+
+      <h1>
+        Tecnologia e IA para<br/>
+        fazer seu negócio avançar.
+      </h1>
+
+      <p class="hero-subtitle">
+        Sites, sistemas, automações e IA para empresas que vendem melhor, organizam processos e trabalham com mais eficiência.
+      </p>
+
+      <div class="hero-ctas">
+        <a href="#contato" class="btn btn-primary btn-lg">Quero melhorar meu negócio</a>
+        <a href="#servicos" class="btn btn-secondary btn-lg">Conhecer soluções</a>
       </div>
-      <div class="se-benefit">
-        <div class="se-icon">💬</div>
-        <h3>Integração WhatsApp</h3>
-        <p>Botão direto para facilitar contato com clientes.</p>
-      </div>
-      <div class="se-benefit">
-        <div class="se-icon">📍</div>
-        <h3>Localização/Mapa</h3>
-        <p>Google Maps quando aplicável ao seu negócio.</p>
-      </div>
-      <div class="se-benefit">
-        <div class="se-icon">🔗</div>
-        <h3>Redes sociais</h3>
-        <p>Links para Instagram, Facebook e outras redes.</p>
-      </div>
-      <div class="se-benefit">
-        <div class="se-icon">✏️</div>
-        <h3>Ajustes incluídos</h3>
-        <p>1 rodada de refinamentos finais no valor.</p>
+
+      <div class="hero-price">
+        <div class="hero-price-label">Site profissional por</div>
+        <div class="hero-price-value">R$ 490</div>
       </div>
     </div>
 
-
-    <div class="se-price-box">
-      <div class="se-price">R$ 490</div>
-      <p class="se-note">Desenvolvimento do site profissional. Domínio, hospedagem e serviços de terceiros são contratados separadamente e informados antes da contratação.</p>
-      <a href="#contato" class="btn-primary" data-whatsapp="site-express">Quero meu site profissional</a>
+    <div class="hero-visual">
+      <div class="hero-composition">
+        <div class="hero-composition-inner">
+          <div class="hero-mockup">
+            <div class="hero-mockup-header"></div>
+            <div class="hero-mockup-body"></div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- ────────── DEMONSTRAÇÃO SITE PROFISSIONAL ────────── -->
-<section class="demos-section">
-  <div class="centered">
-    <div class="section-tag">EXEMPLO DEMONSTRATIVO</div>
-    <h2 class="section-title">Veja como seu site profissional pode ficar</h2>
-    <p class="section-sub">Três exemplos de como um site profissional da Valtun pode ser adaptado para diferentes segmentos de negócio.</p>
+<!-- ────────── SITE PROFISSIONAL ────────── -->
+<section class="section" id="site-profissional">
+  <div class="container">
+    <div class="section-header text-center mb-12">
+      <span class="badge badge-gold mb-4">SITE PROFISSIONAL</span>
+      <h2 class="mb-4">Seu negócio com presença profissional na internet por R$ 490</h2>
+      <p>Site profissional de uma página para apresentar sua empresa e facilitar contato com novos clientes.</p>
+    </div>
 
-    <div class="demos-grid">
-      <div class="demo-card reveal">
-        <div class="demo-badge">Clínica</div>
-        <div class="demo-preview">
-          <div class="demo-header">Clínica Exemplo</div>
-          <div class="demo-nav">Home • Sobre • Serviços • Contato</div>
-          <div class="demo-hero">Saúde para você e sua família</div>
-          <div class="demo-content">
-            <div class="demo-item">✔ Consultório</div>
-            <div class="demo-item">✔ Especialidades</div>
-            <div class="demo-item">✔ Agendamento</div>
-            <div class="demo-item">✔ WhatsApp</div>
-            <div class="demo-item">✔ Localização</div>
+    <div class="grid grid-2">
+      <div class="service-layout">
+        <div class="service-layout-visual">
+          <div class="site-mockup">
+            <div class="site-mockup-browser">
+              <div class="site-mockup-dots">
+                <span></span><span></span><span></span>
+              </div>
+              <div class="site-mockup-content">
+                <div class="site-mockup-hero"></div>
+                <div class="site-mockup-body"></div>
+              </div>
+            </div>
           </div>
-          <div class="demo-cta">Agendar Consulta</div>
         </div>
       </div>
 
-      <div class="demo-card reveal">
-        <div class="demo-badge">Prestador de Serviços</div>
-        <div class="demo-preview">
-          <div class="demo-header">Serviços Exemplo</div>
-          <div class="demo-nav">Home • Sobre • Serviços • Depoimentos • Contato</div>
-          <div class="demo-hero">Qualidade e confiança para seu projeto</div>
-          <div class="demo-content">
-            <div class="demo-item">✔ O que fazemos</div>
-            <div class="demo-item">✔ Portfólio</div>
-            <div class="demo-item">✔ Depoimentos</div>
-            <div class="demo-item">✔ WhatsApp</div>
-            <div class="demo-item">✔ Área de atuação</div>
-          </div>
-          <div class="demo-cta">Solicitar Orçamento</div>
-        </div>
-      </div>
+      <div class="service-layout-content">
+        <h3 class="mb-6">O que está incluído</h3>
+        <ul class="feature-list">
+          <li class="feature-item">
+            <span class="feature-icon">✓</span>
+            <span>Site profissional de uma página</span>
+          </li>
+          <li class="feature-item">
+            <span class="feature-icon">✓</span>
+            <span>Até 5 seções organizadas</span>
+          </li>
+          <li class="feature-item">
+            <span class="feature-icon">✓</span>
+            <span>Integração WhatsApp</span>
+          </li>
+          <li class="feature-item">
+            <span class="feature-icon">✓</span>
+            <span>Localização/Mapa quando aplicável</span>
+          </li>
+          <li class="feature-item">
+            <span class="feature-icon">✓</span>
+            <span>Links para redes sociais</span>
+          </li>
+          <li class="feature-item">
+            <span class="feature-icon">✓</span>
+            <span>SEO básico</span>
+          </li>
+          <li class="feature-item">
+            <span class="feature-icon">✓</span>
+            <span>1 rodada de ajustes incluída</span>
+          </li>
+        </ul>
 
-      <div class="demo-card reveal">
-        <div class="demo-badge">Restaurante</div>
-        <div class="demo-preview">
-          <div class="demo-header">Restaurante Exemplo</div>
-          <div class="demo-nav">Home • Cardápio • Horário • Localização • Contato</div>
-          <div class="demo-hero">Sabor que conquista você</div>
-          <div class="demo-content">
-            <div class="demo-item">✔ Cardápio</div>
-            <div class="demo-item">✔ Pratos em destaque</div>
-            <div class="demo-item">✔ Horário de funcionamento</div>
-            <div class="demo-item">✔ WhatsApp</div>
-            <div class="demo-item">✔ Mapa</div>
-          </div>
-          <div class="demo-cta">Ver Cardápio</div>
+        <div class="price-card mt-8">
+          <div class="price-value">R$ 490</div>
+          <p class="price-note">Desenvolvimento do site profissional. Domínio, hospedagem e serviços de terceiros são contratados separadamente e informados antes da contratação.</p>
+          <a href="#contato" class="btn btn-primary btn-lg">Quero meu site profissional</a>
         </div>
       </div>
     </div>
+  </div>
+</section>
 
-    <p class="demo-note">Estes são exemplos demonstrativos de como o site profissional pode ser personalizado para diferentes segmentos. Cada site é desenvolvido conforme as informações e identidade visual do cliente.</p>
+<!-- ────────── EXEMPLOS DEMONSTRATIVOS ────────── -->
+<section class="section section-sm bg-light" id="exemplos">
+  <div class="container">
+    <div class="section-header text-center mb-12">
+      <span class="badge badge-cyan mb-4">EXEMPLO DEMONSTRATIVO</span>
+      <h2 class="mb-4">Veja como seu site profissional pode ficar</h2>
+      <p>Três exemplos de como um site profissional da Valtun pode ser adaptado para diferentes segmentos de negócio.</p>
+    </div>
+
+    <div class="grid grid-3">
+      <div class="demo-card">
+        <div class="demo-preview">
+          <div class="demo-browser">
+            <div class="demo-dots"><span></span><span></span><span></span></div>
+            <div class="demo-content">
+              <div class="demo-hero">Clínica Exemplo</div>
+              <div class="demo-nav">Home • Sobre • Serviços • Contato</div>
+              <div class="demo-body">
+                <div class="demo-item">✔ Consultório</div>
+                <div class="demo-item">✔ Especialidades</div>
+                <div class="demo-item">✔ Agendamento</div>
+                <div class="demo-item">✔ WhatsApp</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="demo-badge">Clínica</div>
+      </div>
+
+      <div class="demo-card">
+        <div class="demo-preview">
+          <div class="demo-browser">
+            <div class="demo-dots"><span></span><span></span><span></span></div>
+            <div class="demo-content">
+              <div class="demo-hero">Serviços Exemplo</div>
+              <div class="demo-nav">Home • Sobre • Serviços • Contato</div>
+              <div class="demo-body">
+                <div class="demo-item">✔ O que fazemos</div>
+                <div class="demo-item">✔ Portfólio</div>
+                <div class="demo-item">✔ WhatsApp</div>
+                <div class="demo-item">✔ Área de atuação</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="demo-badge">Prestador de Serviços</div>
+      </div>
+
+      <div class="demo-card">
+        <div class="demo-preview">
+          <div class="demo-browser">
+            <div class="demo-dots"><span></span><span></span><span></span></div>
+            <div class="demo-content">
+              <div class="demo-hero">Restaurante Exemplo</div>
+              <div class="demo-nav">Home • Cardápio • Horário • Contato</div>
+              <div class="demo-body">
+                <div class="demo-item">✔ Cardápio</div>
+                <div class="demo-item">✔ Pratos em destaque</div>
+                <div class="demo-item">✔ Horário de funcionamento</div>
+                <div class="demo-item">✔ Mapa</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="demo-badge">Restaurante</div>
+      </div>
+    </div>
+
+    <p class="text-center mt-8" style="color: var(--muted); font-size: var(--text-sm);">
+      Estes são exemplos demonstrativos de como o site profissional pode ser personalizado para diferentes segmentos.
+    </p>
   </div>
 </section>
 
 <!-- ────────── SERVIÇOS ────────── -->
-<section class="services-section" id="servicos">
-  <div class="section-tag">SERVIÇOS</div>
-  <h2 class="section-title">Soluções para o seu negócio</h2>
-
-  <div class="services-grid">
-    <div class="service-card reveal">
-      <div class="service-icon">💻</div>
-      <h3>Sistemas</h3>
-      <p>Sistemas sob medida para organizar informações, reduzir trabalho manual e dar controle ao negócio.</p>
-      <div class="service-price">A partir de R$ 1.490</div>
-      <a href="#contato" class="service-cta" data-whatsapp="sistemas">Tenho um processo</a>
+<section class="section" id="servicos">
+  <div class="container">
+    <div class="section-header text-center mb-12">
+      <span class="badge badge-cyan mb-4">SERVIÇOS</span>
+      <h2 class="mb-4">Soluções para o seu negócio</h2>
     </div>
 
-    <div class="service-card reveal">
-      <div class="service-icon">⚡</div>
-      <h3>Automação & IA</h3>
-      <p>Automatizamos tarefas, atendimento e processos usando integrações e IA para aumentar eficiência.</p>
-      <div class="service-price">A partir de R$ 590</div>
-      <a href="#contato" class="service-cta" data-whatsapp="automacao">Quero automatizar</a>
-    </div>
-
-    <div class="service-card reveal">
-      <div class="service-icon">🛠️</div>
-      <h3>Desenvolvimento sob medida</h3>
-      <p>Soluções personalizadas para problemas específicos que sistemas prontos não resolvem.</p>
-      <div class="service-price">Sob orçamento</div>
-      <a href="#contato" class="service-cta" data-whatsapp="explicar-problema">Tenho um problema</a>
-    </div>
-  </div>
-</section>
-
-<!-- ────────── DOR → SOLUÇÃO ────────── -->
-<section class="pain-solution-section">
-  <div class="centered">
-    <div class="section-tag">PROBLEMAS REAIS</div>
-    <h2 class="section-title">Qual problema você enfrenta?</h2>
-
-    <div class="pain-solution-grid">
-      <div class="pain-solution-card reveal">
-        <div class="pain">"Minha empresa não tem site."</div>
-        <div class="solution">Site profissional</div>
-        <a href="#site-express" class="pain-cta">Ver solução</a>
+    <div class="grid grid-3">
+      <div class="card">
+        <h3 class="mb-4">Sistemas</h3>
+        <p class="mb-6">Sistemas sob medida para organizar informações, reduzir trabalho manual e dar controle ao negócio.</p>
+        <div class="text-cyan font-semibold mb-4">A partir de R$ 1.490</div>
+        <a href="#contato" class="btn btn-secondary">Tenho um processo</a>
       </div>
 
-      <div class="pain-solution-card reveal">
-        <div class="pain">"Ainda controlo tudo em planilhas."</div>
-        <div class="solution">Sistemas</div>
-        <a href="#servicos" class="pain-cta">Ver solução</a>
+      <div class="card">
+        <h3 class="mb-4">Automação & IA</h3>
+        <p class="mb-6">Automatizamos tarefas, atendimento e processos usando integrações e IA para aumentar eficiência.</p>
+        <div class="text-cyan font-semibold mb-4">A partir de R$ 590</div>
+        <a href="#contato" class="btn btn-secondary">Quero automatizar</a>
       </div>
 
-      <div class="pain-solution-card reveal">
-        <div class="pain">"Tarefas repetitivas tomam tempo."</div>
-        <div class="solution">Automação</div>
-        <a href="#servicos" class="pain-cta">Ver solução</a>
-      </div>
-
-      <div class="pain-solution-card reveal">
-        <div class="pain">"Tenho um problema específico."</div>
-        <div class="solution">Sob medida</div>
-        <a href="#contato" class="pain-cta" data-whatsapp="explicar-problema">Falar com a Valtun</a>
+      <div class="card">
+        <h3 class="mb-4">Desenvolvimento sob medida</h3>
+        <p class="mb-6">Soluções personalizadas para problemas específicos que sistemas prontos não resolvem.</p>
+        <div class="text-cyan font-semibold mb-4">Sob orçamento</div>
+        <a href="#contato" class="btn btn-secondary">Tenho um problema</a>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ────────── DIFERENCIAL ────────── -->
-<section class="different-section">
-  <div class="centered">
-    <div class="section-tag">DIFERENCIAL</div>
-    <h2 class="section-title">Tecnologia que resolve problemas reais.</h2>
-    <p class="section-sub">Entendemos o problema, definimos a solução e construímos ferramentas adequadas à realidade do negócio.</p>
-
-    <div class="different-grid">
-      <div class="different-item reveal">
-        <div class="different-icon">🎯</div>
-        <h3>Soluções sob medida</h3>
-        <p>Desenvolvido especificamente para suas necessidades.</p>
-      </div>
-
-      <div class="different-item reveal">
-        <div class="different-icon">💬</div>
-        <h3>Comunicação direta</h3>
-        <p>Você fala com quem desenvolve, sem intermediários.</p>
-      </div>
-
-      <div class="different-item reveal">
-        <div class="different-icon">🚀</div>
-        <h3>Entregas ágeis</h3>
-        <p>Iterações rápidas com foco em resultados práticos.</p>
-      </div>
-
-      <div class="different-item reveal">
-        <div class="different-icon">📈</div>
-        <h3>Foco no resultado</h3>
-        <p>Resolver seu problema, não apenas entregar código.</p>
-      </div>
+<!-- ────────── PRODUTOS ────────── -->
+<section class="section section-sm bg-light" id="produtos">
+  <div class="container">
+    <div class="section-header text-center mb-12">
+      <span class="badge badge-gold mb-4">PRODUTOS</span>
+      <h2 class="mb-4">Produtos Valtun</h2>
+      <p>Desenvolvemos produtos digitais para resolver problemas reais.</p>
     </div>
-  </div>
-</section>
 
-<!-- ────────── PRODUTOS VALTUN ────────── -->
-<section class="products-section" id="produtos">
-  <div class="centered">
-    <div class="section-tag">PRODUTOS</div>
-    <h2 class="section-title">Produtos Valtun</h2>
-    <p class="section-sub">Desenvolvemos produtos digitais para resolver problemas reais.</p>
-
-    <div class="products-grid">
-      <div class="product-card featured reveal">
+    <div class="grid grid-3">
+      <div class="card card-light">
         <div class="product-badge">Em desenvolvimento</div>
-        <h3>HorizonGest</h3>
-        <p>Gestão inteligente para restaurantes.</p>
-        <p class="product-desc-sm">Plataforma para centralizar e simplificar processos da operação de restaurantes.</p>
-        <a href="#contato" class="product-cta" data-whatsapp="horizongest">Interesse</a>
+        <h3 class="mb-4">HorizonGest</h3>
+        <p class="mb-4">Gestão inteligente para restaurantes.</p>
+        <p class="text-sm" style="color: var(--muted);">Plataforma para centralizar e simplificar processos da operação de restaurantes.</p>
+        <a href="#contato" class="btn btn-secondary mt-6">Interesse</a>
       </div>
 
-      <div class="product-card reveal">
-        <h3>Ascen</h3>
-        <p>Suas finanças pessoais sob controle.</p>
-        <p class="product-desc-sm">Aplicativo para organizar receitas, despesas e acompanhar a vida financeira.</p>
-        <div class="product-status">Em desenvolvimento</div>
-        <a href="#contato" class="product-cta" data-whatsapp="ascen">Interesse</a>
+      <div class="card card-light">
+        <h3 class="mb-4">Ascen</h3>
+        <p class="mb-4">Suas finanças pessoais sob controle.</p>
+        <p class="text-sm" style="color: var(--muted);">Aplicativo para organizar receitas, despesas e acompanhar a vida financeira.</p>
+        <div class="product-status mt-4">Em desenvolvimento</div>
+        <a href="#contato" class="btn btn-secondary mt-6">Interesse</a>
       </div>
 
-      <div class="product-card reveal">
+      <div class="card card-light">
         <div class="product-badge">Experimente agora</div>
         <div class="product-image">
           <img src="/raiox-screenshot.png" alt="Raio-X Financeiro - Interface do produto" loading="lazy" />
         </div>
-        <h3>Raio-X Financeiro</h3>
-        <p>Análise visual das suas finanças.</p>
-        <p class="product-desc-sm">Envie sua planilha de movimentações e receba indicadores, gráficos e insights sobre sua situação financeira.</p>
-        <a href="/raio-x/" class="product-cta">Experimentar</a>
+        <h3 class="mb-4">Raio-X Financeiro</h3>
+        <p class="mb-4">Análise visual das suas finanças.</p>
+        <p class="text-sm" style="color: var(--muted);">Envie sua planilha de movimentações e receba indicadores, gráficos e insights sobre sua situação financeira.</p>
+        <a href="/raio-x/" class="btn btn-primary mt-6">Experimentar</a>
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- ────────── CONTEÚDOS ────────── -->
+<section class="section" id="conteudos">
+  <div class="container">
+    <div class="section-header text-center mb-12">
+      <span class="badge badge-cyan mb-4">CONTEÚDOS</span>
+      <h2 class="mb-4">Guias e ideias para seu negócio</h2>
+      <p>Artigos práticos sobre presença digital, tecnologia, automação e IA.</p>
+    </div>
+
+    <div id="home-articles-container"></div>
+
+    <div class="text-center mt-8">
+      <a href="/conteudos/" class="btn btn-secondary">Ver todos os conteúdos</a>
     </div>
   </div>
 </section>
 
 <!-- ────────── SOBRE ────────── -->
-<section class="about-section" id="sobre">
-  <div class="centered">
-    <div class="section-tag">SOBRE</div>
-    <h2 class="section-title">TECNOLOGIA DEVE RESOLVER PROBLEMAS, NÃO CRIAR OUTROS.</h2>
-    <p class="section-sub">A Valtun transforma problemas reais em soluções digitais práticas. Sites, sistemas, automações e produtos usando tecnologia e IA para simplificar processos e criar oportunidades.</p>
+<section class="section section-sm bg-light" id="sobre">
+  <div class="container">
+    <div class="section-header text-center">
+      <span class="badge badge-gold mb-4">SOBRE</span>
+      <h2 class="mb-4">TECNOLOGIA DEVE RESOLVER PROBLEMAS, NÃO CRIAR OUTROS.</h2>
+      <p style="max-width: 720px; margin: 0 auto;">A Valtun transforma problemas reais em soluções digitais práticas. Sites, sistemas, automações e produtos usando tecnologia e IA para simplificar processos e criar oportunidades.</p>
+    </div>
   </div>
 </section>
 
-<!-- ────────── CONTEÚDOS ────────── -->
-<section class="content-preview-section">
-  <div class="centered">
-    <div class="section-tag">CONTEÚDOS</div>
-    <h2 class="section-title">Guias e ideias para seu negócio</h2>
-    <p class="section-sub">Artigos práticos sobre presença digital, tecnologia, automação e IA.</p>
+<!-- ────────── CTA FINAL ────────── -->
+<section class="section section-lg" id="contato">
+  <div class="container">
+    <div class="cta-card text-center">
+      <h2 class="mb-6">Não sabe exatamente qual solução precisa?</h2>
+      <p class="mb-8">Conte o problema. A Valtun ajuda a entender qual caminho faz sentido para o seu negócio.</p>
 
-    <div id="home-articles-container"></div>
-
-    <a href="/conteudos/" class="btn-secondary">Ver todos os conteúdos</a>
-  </div>
-</section>
-
-<!-- ────────── CONTATO ────────── -->
-<section class="contact-section" id="contato">
-  <div class="contact-inner">
-    <div class="contact-content">
-      <div class="section-tag">CONTATO</div>
-      <h2 class="section-title">Não sabe exatamente qual solução precisa?</h2>
-      <p class="section-sub">Conte o problema. A Valtun ajuda a entender qual caminho faz sentido para o seu negócio.</p>
-
-      <div class="contact-info">
+      <div class="contact-info mb-8">
         <div class="contact-item">
-          <div class="contact-icon">📱</div>
-          <div>
-            <div class="contact-label">WhatsApp</div>
-            <div class="contact-value">(73) 99977-3736</div>
-          </div>
+          <div class="contact-label">WhatsApp</div>
+          <div class="contact-value">(73) 99977-3736</div>
         </div>
-
         <div class="contact-item">
-          <div class="contact-icon">📍</div>
-          <div>
-            <div class="contact-label">Atendimento</div>
-            <div class="contact-value">Teixeira de Freitas e projetos online</div>
-          </div>
+          <div class="contact-label">Atendimento</div>
+          <div class="contact-value">Teixeira de Freitas e projetos online</div>
         </div>
-
         <div class="contact-item">
-          <div class="contact-icon">✉️</div>
-          <div>
-            <div class="contact-label">E-mail</div>
-            <div class="contact-value">contato@valtun.com.br</div>
-          </div>
+          <div class="contact-label">E-mail</div>
+          <div class="contact-value">contato@valtun.com.br</div>
         </div>
       </div>
 
-      <a href="https://wa.me/5573999773736?text=Olá!+Vi+o+site+da+Valtun+e+gostaria+de+conversar+sobre+uma+solução+digital+para+meu+negócio." class="btn-whatsapp" data-whatsapp="generic" target="_blank" rel="noopener">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      <a href="https://wa.me/5573999773736?text=Olá!+Vi+o+site+da+Valtun+e+gostaria+de+conversar+sobre+uma+solução+digital+para+meu+negócio." class="btn btn-primary btn-lg" target="_blank" rel="noopener">
         Solicitar orçamento pelo WhatsApp
       </a>
     </div>
@@ -385,31 +380,49 @@
 
 <!-- ────────── FOOTER ────────── -->
 <footer>
-  <div class="footer-inner">
-    <div>
-      <div class="footer-logo">VAL<span>TUN</span></div>
-      <div class="footer-tagline">Soluções digitais para empresas</div>
+  <div class="container">
+    <div class="footer-inner">
+      <div>
+        <div class="footer-logo">VAL<span>TUN</span></div>
+        <div class="footer-tagline">Soluções digitais para empresas</div>
+      </div>
+
+      <div class="footer-links">
+        <a href="/conteudos/">Conteúdos</a>
+        <a href="#site-profissional">Site profissional</a>
+        <a href="#servicos">Serviços</a>
+        <a href="#produtos">Produtos</a>
+        <a href="#sobre">Sobre</a>
+        <a href="#contato">Contato</a>
+        <a href="/privacidade.html">Política de Privacidade</a>
+        <a href="mailto:dpo@valtun.com.br">dpo@valtun.com.br</a>
+      </div>
     </div>
 
-    <div class="footer-links">
-      <a href="/conteudos/">Conteúdos</a>
-      <a href="#site-express">Site profissional</a>
-      <a href="#servicos">Serviços</a>
-      <a href="#produtos">Produtos</a>
-      <a href="#sobre">Sobre</a>
-      <a href="#contato">Contato</a>
-      <a href="/privacidade.html">Política de Privacidade</a>
-      <a href="mailto:dpo@valtun.com.br">dpo@valtun.com.br</a>
+    <div class="footer-copy">
+      © <span id="current-year"></span> Valtun. Todos os direitos reservados.
     </div>
-  </div>
-
-  <div class="footer-copy">
-    © <span id="current-year"></span> Valtun. Todos os direitos reservados.
   </div>
 </footer>
 
 <script>
   document.getElementById('current-year').textContent = new Date().getFullYear();
+
+  // Mobile menu toggle
+  function toggleNav() {
+    const menu = document.getElementById('mobile-menu');
+    menu.classList.toggle('active');
+  }
+
+  // Header scroll effect
+  window.addEventListener('scroll', () => {
+    const header = document.getElementById('navbar');
+    if (window.scrollY > 50) {
+      header.classList.add('scrolled');
+    } else {
+      header.classList.remove('scrolled');
+    }
+  });
 
   // Load articles on home
   async function loadHomeArticles() {
@@ -420,26 +433,30 @@
 
       if (data && data.length > 0) {
         const articlesToShow = data.slice(0, 3);
-        container.innerHTML = articlesToShow.map(article => `
-          <div class="home-article-card">
-            <a href="/conteudos/${article.slug}">
-              <div class="home-article-category">${article.category}</div>
-              <h3 class="home-article-title">${article.title}</h3>
-              <p class="home-article-excerpt">${article.excerpt}</p>
-              <div class="home-article-date">${new Date(article.published_at).toLocaleDateString('pt-BR')}</div>
-            </a>
+        container.innerHTML = `
+          <div class="grid grid-${Math.min(articlesToShow.length, 3)}">
+            ${articlesToShow.map(article => `
+              <div class="card card-light">
+                <a href="/conteudos/${article.slug}" style="text-decoration: none; color: inherit;">
+                  <span class="badge badge-cyan mb-4">${article.category}</span>
+                  <h4 class="mb-4">${article.title}</h4>
+                  <p class="text-sm mb-4" style="color: var(--muted);">${article.excerpt}</p>
+                  <div class="text-sm" style="color: var(--muted-dim);">${new Date(article.published_at).toLocaleDateString('pt-BR')}</div>
+                </a>
+              </div>
+            `).join('')}
           </div>
-        `).join('');
+        `;
       } else {
-        container.innerHTML = '<p style="color: var(--muted);">Conteúdos em breve.</p>';
+        container.innerHTML = '<p class="text-center" style="color: var(--muted);">Conteúdos em breve.</p>';
       }
     } catch (error) {
       console.error('Error loading articles:', error);
+      container.innerHTML = '<p class="text-center" style="color: var(--muted);">Conteúdos em breve.</p>';
     }
   }
 
   loadHomeArticles();
 </script>
-<script src="/ascen-landing.js"></script>
 </body>
 </html>
