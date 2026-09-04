@@ -24,6 +24,7 @@
 <header id="navbar">
   <a href="/" class="nav-logo">VAL<span>TUN</span></a>
   <nav class="nav-links">
+    <a href="/conteudos/">Conteúdos</a>
     <a href="/#site-express">Site profissional</a>
     <a href="/#servicos">Serviços</a>
     <a href="/#produtos">Produtos</a>
@@ -75,6 +76,25 @@
     <p class="section-sub">Estamos construindo uma biblioteca de conteúdos práticos para pequenos negócios.</p>
 
     <div id="articles-container"></div>
+
+    <div class="content-empty" id="empty-state">
+      <div class="empty-icon">📚</div>
+      <h3>Conteúdos em breve</h3>
+      <p>Estamos preparando artigos e guias sobre:</p>
+      <ul class="content-topics-list">
+        <li>Sites e presença digital para pequenas empresas</li>
+        <li>Domínio, hospedagem e como funciona um site</li>
+        <li>Minha empresa precisa de site mesmo tendo Instagram?</li>
+        <li>Como colocar sua empresa no Google</li>
+        <li>Site de uma página funciona para pequenos negócios?</li>
+        <li>Como usar WhatsApp para receber contatos pelo site</li>
+        <li>Inteligência Artificial prática para pequenos negócios</li>
+        <li>Ferramentas para automatizar processos</li>
+        <li>Comparativos de plataformas e ferramentas</li>
+      </ul>
+      <p class="empty-note">Quer ser avisado quando publicarmos novos conteúdos? Entre em contato pelo WhatsApp.</p>
+      <a href="/#contato" class="btn-primary">Avise-me sobre novos conteúdos</a>
+    </div>
 
     <div class="content-empty" id="empty-state">
       <div class="empty-icon">📚</div>
@@ -179,25 +199,32 @@
 <script>
   document.getElementById('current-year').textContent = new Date().getFullYear();
 
-  // Load articles from JSON
+  // Load articles from Supabase
   async function loadArticles() {
     try {
-      const response = await fetch('/conteudos/articles.json');
+      const response = await fetch('/api/articles');
       const data = await response.json();
       const container = document.getElementById('articles-container');
       const emptyState = document.getElementById('empty-state');
 
-      if (data.articles && data.articles.length > 0) {
+      if (data && data.length > 0) {
         emptyState.style.display = 'none';
-        container.innerHTML = data.articles.map(article => `
+        container.innerHTML = data.map(article => `
           <article class="article-card">
-            <a href="/conteudos/${article.slug}.html" class="article-link">
-              <div class="article-category">${article.category}</div>
-              <h3 class="article-title">${article.title}</h3>
-              <p class="article-excerpt">${article.excerpt}</p>
-              <div class="article-meta">
-                <span class="article-date">${article.date}</span>
-                <span class="article-read-time">${article.readTime}</span>
+            <a href="/conteudos/${article.slug}" class="article-link">
+              <div class="article-cover">
+                ${article.cover_image
+                  ? `<img src="${article.cover_image}" alt="${article.title}" loading="lazy" />`
+                  : `<div class="article-cover-placeholder"><span>📄</span></div>`
+                }
+              </div>
+              <div class="article-content">
+                <div class="article-category">${article.category}</div>
+                <h3 class="article-title">${article.title}</h3>
+                <p class="article-excerpt">${article.excerpt}</p>
+                <div class="article-meta">
+                  <span class="article-date">${new Date(article.published_at).toLocaleDateString('pt-BR')}</span>
+                </div>
               </div>
             </a>
           </article>
