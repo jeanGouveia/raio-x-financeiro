@@ -79,55 +79,64 @@ export default async function handler(req, res) {
   </script>
 </head>
 <body>
-  <header id="navbar">
-    <a href="/" class="nav-logo">VAL<span>TUN</span></a>
-    <nav class="nav-links">
-      <a href="/conteudos/">Conteúdos</a>
-      <a href="/#site-express">Site profissional</a>
-      <a href="/#servicos">Serviços</a>
-      <a href="/#produtos">Produtos</a>
-      <a href="/#sobre">Sobre</a>
-      <a href="/#contato">Contato</a>
-    </nav>
-    <a href="/#contato" class="btn-primary">Solicitar orçamento</a>
+  <header class="site-header" id="navbar">
+    <div class="container header-inner">
+      <a href="/" class="site-logo">VAL<span>TUN</span></a>
+
+      <nav class="site-nav">
+        <ul class="site-nav-list">
+          <li><a href="/conteudos/" class="site-nav-link active">Conteúdos</a></li>
+          <li><a href="/#site-profissional" class="site-nav-link">Site profissional</a></li>
+          <li><a href="/#servicos" class="site-nav-link">Serviços</a></li>
+          <li><a href="/#produtos" class="site-nav-link">Produtos</a></li>
+          <li><a href="/#sobre" class="site-nav-link">Sobre</a></li>
+          <li><a href="/#contato" class="site-nav-link">Contato</a></li>
+        </ul>
+      </nav>
+
+      <div class="header-actions">
+        <a href="/#contato" class="btn btn-primary">Solicitar orçamento</a>
+      </div>
+    </div>
   </header>
 
   <main class="article-page">
-    <nav class="breadcrumbs" aria-label="Navegação">
-      <div class="centered">
-        <a href="/">Home</a>
-        <span class="separator">/</span>
-        <a href="/conteudos/">Conteúdos</a>
-        <span class="separator">/</span>
-        <span class="current">${data.title}</span>
-      </div>
-    </nav>
+    <div class="container">
+      <nav class="breadcrumbs mb-8" aria-label="Navegação">
+        <a href="/" style="color: var(--muted); text-decoration: none;">← Conteúdos</a>
+      </nav>
 
-    <article class="article-content">
-      <div class="article-category">${data.category}</div>
-      <h1>${data.title}</h1>
-      <p class="article-meta">
-        <span class="article-date">${new Date(data.published_at).toLocaleDateString('pt-BR')}</span>
-      </p>
-      ${data.cover_image ? `
-      <div class="article-cover-image">
-        <img src="${data.cover_image}" alt="${data.title}" />
-      </div>
-      ` : ''}
-      <div class="article-body">
-        ${sanitizedContent}
-      </div>
-    </article>
+      <article class="article-content">
+        <div class="article-category">${data.category}</div>
+        <h1>${data.title}</h1>
+        <p class="article-meta-editorial">
+          <span class="article-date-editorial">${new Date(data.published_at).toLocaleDateString('pt-BR')}</span>
+        </p>
+        ${data.excerpt ? `<p class="article-excerpt-editorial" style="font-size: var(--text-lg); color: var(--muted); margin-bottom: var(--space-8);">${data.excerpt}</p>` : ''}
+        ${data.cover_image ? `
+        <div class="article-cover-image-wrapper">
+          <img src="${data.cover_image}" alt="${data.title}" class="article-cover-image" />
+        </div>
+        ` : ''}
+        <div class="article-body">
+          ${sanitizedContent}
+        </div>
+      </article>
 
-    <section class="article-cta-section">
-      <div class="centered">
-        <h2 class="section-title">Quer fortalecer a presença digital da sua empresa?</h2>
-        <p class="section-sub">Conheça o site profissional por R$ 490.</p>
-        <a href="/#site-express" class="btn-primary">Conhecer site profissional</a>
-      </div>
-    </section>
+      <section class="section section-sm bg-light">
+        <div class="container">
+          <div class="cta-card text-center">
+            <h2 class="mb-4">Quer fortalecer a presença digital da sua empresa?</h2>
+            <p class="mb-8">Conheça o site profissional por R$ 490.</p>
+            <a href="/#site-profissional" class="btn btn-primary btn-lg">Conhecer site profissional</a>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
 
-    <footer>
+  <footer>
+    <div class="container">
       <div class="footer-inner">
         <div>
           <div class="footer-logo">VAL<span>TUN</span></div>
@@ -136,7 +145,7 @@ export default async function handler(req, res) {
 
         <div class="footer-links">
           <a href="/conteudos/">Conteúdos</a>
-          <a href="/#site-express">Site profissional</a>
+          <a href="/#site-profissional">Site profissional</a>
           <a href="/#servicos">Serviços</a>
           <a href="/#produtos">Produtos</a>
           <a href="/#sobre">Sobre</a>
@@ -149,7 +158,8 @@ export default async function handler(req, res) {
       <div class="footer-copy">
         © <span id="current-year"></span> Valtun. Todos os direitos reservados.
       </div>
-    </footer>
+    </div>
+  </footer>
 
     <script>
       document.getElementById('current-year').textContent = new Date().getFullYear();
