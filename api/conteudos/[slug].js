@@ -2,14 +2,14 @@ import { createClient } from '@supabase/supabase-js'
 import DOMPurify from 'dompurify'
 
 const supabaseUrl = process.env.SUPABASE_URL
-const supabaseAnonKey = process.env.SUPABASE_ANON_KEY
+const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_ANON_KEY
 
-if (!supabaseUrl || !supabaseAnonKey) {
+if (!supabaseUrl || !supabaseKey) {
   console.warn('⚠️ Supabase não configurado no servidor. Endpoint /api/conteudos/[slug] não funcionará.')
 }
 
-const supabase = supabaseUrl && supabaseAnonKey
-  ? createClient(supabaseUrl, supabaseAnonKey)
+const supabase = supabaseUrl && supabaseKey
+  ? createClient(supabaseUrl, supabaseKey)
   : null
 
 export default async function handler(req, res) {
@@ -21,7 +21,7 @@ export default async function handler(req, res) {
   }
 
   if (!supabase) {
-    return res.status(500).json({ error: 'Supabase not configured' })
+    return res.status(500).json({ error: 'Supabase not configured', missing: { url: !!supabaseUrl, key: !!supabaseKey } })
   }
 
   try {
