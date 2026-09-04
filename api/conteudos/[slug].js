@@ -63,6 +63,7 @@ export default async function handler(req, res) {
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>${data.seo_title || data.title} | Valtun — Tecnologia e IA para Negócios</title>
   <meta name="description" content="${data.seo_description || data.excerpt}" />
+  <link rel="icon" type="image/jpeg" href="/brand/valtun-v.jpeg" />
   <meta name="robots" content="index, follow" />
   <link rel="canonical" href="https://valtun.com.br/conteudos/${slug}" />
   <meta property="og:title" content="${data.seo_title || data.title}" />
