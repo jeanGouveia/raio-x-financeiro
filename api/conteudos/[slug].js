@@ -95,9 +95,9 @@ export default async function handler(req, res) {
     <div class="container header-inner">
       <a href="/" class="site-logo">
         <div class="site-logo-symbol">
-          <img src="/brand/valtun-v.png" alt="V" width="40" height="40" />
+          <img src="/brand/valtun-v.jpeg" alt="V" width="40" height="40" />
         </div>
-        VAL<span>TUN</span>
+        <span class="site-logo-text">VALTUN</span>
       </a>
 
       <nav class="site-nav">
@@ -158,9 +158,9 @@ export default async function handler(req, res) {
         <div>
           <div class="footer-logo">
             <div class="footer-logo-symbol">
-              <img src="/brand/valtun-v.png" alt="V" width="40" height="40" />
+              <img src="/brand/valtun-v.jpeg" alt="V" width="40" height="40" />
             </div>
-            VAL<span>TUN</span>
+            <span class="footer-logo-text">VALTUN</span>
           </div>
           <div class="footer-tagline">Soluções digitais para empresas</div>
         </div>

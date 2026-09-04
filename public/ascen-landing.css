@@ -326,8 +326,11 @@
       gap: var(--space-3);
     }
 
-    .site-logo span {
-      color: var(--cyan);
+    .site-logo-text {
+      background: linear-gradient(90deg, var(--white) 0%, var(--cyan) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
     }
 
     .site-logo-symbol {
@@ -1033,8 +1036,11 @@
       gap: var(--space-3);
     }
 
-    .footer-logo span {
-      color: var(--cyan);
+    .footer-logo-text {
+      background: linear-gradient(90deg, var(--white) 0%, var(--cyan) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
     }
 
     .footer-logo-symbol {
