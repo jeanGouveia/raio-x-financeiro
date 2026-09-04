@@ -6,15 +6,19 @@
   "scripts": {
     "dev": "vite",
     "server": "node server.js",
-    "dev-full": "concurrently \"npm run server\" \"npm run dev\"",
-    "build": "vite build",
+    "dev-full": "node scripts/prepare-admin.js && concurrently \"node server.js\" \"vite\"",
+    "build": "node scripts/prepare-admin.js && vite build",
     "lint": "eslint .",
     "preview": "vite preview"
   },
   "dependencies": {
+    "@google/generative-ai": "^0.24.1",
     "@supabase/supabase-js": "^2.103.0",
     "chart.js": "^4.5.1",
     "date-fns": "^4.1.0",
+    "dompurify": "^3.4.14",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
     "jspdf": "^2.5.2",
     "jspdf-autotable": "^3.8.4",
     "lucide-react": "^0.577.0",

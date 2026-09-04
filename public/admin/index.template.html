@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin — Valtun</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+  </style>
+  <script>
+    window.SUPABASE_URL = '__SUPABASE_URL__';
+    window.SUPABASE_ANON_KEY = '__SUPABASE_ANON_KEY__';
+  </script>
+</head>
+<body class="bg-slate-900 text-white min-h-screen">
+  <div id="app">
+    <div id="login-screen" class="min-h-screen flex items-center justify-center">
+      <div class="max-w-md w-full p-8">
+        <h1 class="text-2xl font-bold mb-6">Admin Valtun</h1>
+        <div class="space-y-4">
+          <input type="email" id="email" placeholder="Email" class="w-full bg-slate-800 border border-slate-700 rounded px-4 py-3 text-white" />
+          <input type="password" id="password" placeholder="Senha" class="w-full bg-slate-800 border border-slate-700 rounded px-4 py-3 text-white" />
+          <button onclick="login()" class="w-full bg-cyan-500 hover:bg-cyan-600 text-white font-semibold py-3 px-4 rounded">Entrar</button>
+        </div>
+        <p class="text-gray-400 text-sm mt-4">Área administrativa restrita</p>
+      </div>
+    </div>
+
+    <div id="dashboard" class="hidden">
+      <header class="border-b border-slate-700">
+        <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+          <h1 class="text-xl font-bold">Admin Valtun</h1>
+          <button onclick="logout()" class="text-gray-400 hover:text-white">Sair</button>
+        </div>
+      </header>
+
+      <main class="max-w-7xl mx-auto px-4 py-8">
+        <div class="flex justify-between items-center mb-6">
+          <h2 class="text-2xl font-bold">Artigos</h2>
+          <button onclick="showNewArticle()" class="bg-cyan-500 hover:bg-cyan-600 text-white font-semibold py-2 px-4 rounded">Novo Artigo</button>
+        </div>
+
+        <div id="articles-list" class="space-y-4">
+          <div class="text-center py-12 text-gray-400">Carregando...</div>
+        </div>
+      </main>
+    </div>
+
+    <div id="new-article" class="hidden">
+      <header class="border-b border-slate-700">
+        <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+          <h1 class="text-xl font-bold">Novo Artigo</h1>
+          <button onclick="showDashboard()" class="text-gray-400 hover:text-white">Voltar</button>
+        </div>
+      </header>
+
+      <main class="max-w-4xl mx-auto px-4 py-8">
+        <div id="generate-section" class="space-y-6">
+          <div>
+            <label class="block text-sm font-medium mb-2">Assunto do artigo</label>
+            <input type="text" id="subject" placeholder="Ex: Minha empresa precisa de um site mesmo tendo Instagram?" class="w-full bg-slate-800 border border-slate-700 rounded px-4 py-3 text-white" />
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium mb-2">Categoria</label>
+            <select id="category" class="w-full bg-slate-800 border border-slate-700 rounded px-4 py-3 text-white">
+              <option value="Sites e presença digital">Sites e presença digital</option>
+              <option value="Tecnologia para pequenos negócios">Tecnologia para pequenos negócios</option>
+              <option value="Inteligência Artificial">Inteligência Artificial</option>
+              <option value="Automação">Automação</option>
+              <option value="Guias práticos">Guias práticos</option>
+              <option value="Ferramentas">Ferramentas</option>
+            </select>
+          </div>
+
+          <button onclick="generateArticle()" id="generate-btn" class="bg-cyan-500 hover:bg-cyan-600 text-white font-semibold py-3 px-6 rounded">Gerar com IA</button>
+        </div>
+
+        <div id="edit-section" class="hidden space-y-6">
+          <div>
+            <label class="block text-sm font-medium mb-2">Título</label>
+            <input type="text" id="title" class="w-full bg-slate-800 border border-slate-700 rounded px-4 py-3 text-white" />
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium mb-2">Slug</label>
+            <input type="text" id="slug" class="w-full bg-slate-800 border border-slate-700 rounded px-4 py-3 text-white" />
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium mb-2">Resumo</label>
+            <textarea id="excerpt" rows="3" class="w-full bg-slate-800 border border-slate-700 rounded px-4 py-3 text-white"></textarea>
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium mb-2">Conteúdo (HTML)</label>
+            <textarea id="content" rows="15" class="w-full bg-slate-800 border border-slate-700 rounded px-4 py-3 text-white font-mono text-sm"></textarea>
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium mb-2">SEO Title</label>
+            <input type="text" id="seo_title" maxlength="60" class="w-full bg-slate-800 border border-slate-700 rounded px-4 py-3 text-white" />
+            <p class="text-gray-400 text-xs mt-1"><span id="seo_title_count">0</span>/60</p>
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium mb-2">SEO Description</label>
+            <textarea id="seo_description" rows="2" maxlength="160" class="w-full bg-slate-800 border border-slate-700 rounded px-4 py-3 text-white"></textarea>
+            <p class="text-gray-400 text-xs mt-1"><span id="seo_description_count">0</span>/160</p>
+          </div>
+
+          <div class="flex gap-4">
+            <button onclick="saveArticle('draft')" id="save-draft-btn" class="bg-gray-600 hover:bg-gray-700 text-white font-semibold py-3 px-6 rounded">Salvar Rascunho</button>
+            <button onclick="saveArticle('published')" id="publish-btn" class="bg-green-600 hover:bg-green-700 text-white font-semibold py-3 px-6 rounded">Publicar</button>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script type="module">
+    import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm'
+
+    const supabaseUrl = window.SUPABASE_URL;
+    const supabaseAnonKey = window.SUPABASE_ANON_KEY;
+
+    window.supabase = createClient(supabaseUrl, supabaseAnonKey)
+
+    let session = null
+
+    async function checkSession() {
+      const { data: { session: currentSession } } = await window.supabase.auth.getSession()
+      session = currentSession
+      if (session) {
+        const { data: isAdmin } = await window.supabase
+          .from('admin_users')
+          .select('user_id')
+          .eq('user_id', session.user.id)
+          .single()
+
+        if (isAdmin) {
+          showDashboard()
+          loadArticles()
+        } else {
+          alert('Acesso negado. Você não é administrador.')
+          await window.supabase.auth.signOut()
+        }
+      }
+    }
+
+    window.login = async () => {
+      const email = document.getElementById('email').value
+      const password = document.getElementById('password').value
+
+      if (!email || !password) {
+        alert('Preencha email e senha')
+        return
+      }
+
+      const { data, error } = await window.supabase.auth.signInWithPassword({ email, password })
+
+      if (error) {
+        alert('Erro no login: ' + error.message)
+      } else {
+        session = data.session
+        const { data: isAdmin } = await window.supabase
+          .from('admin_users')
+          .select('user_id')
+          .eq('user_id', session.user.id)
+          .single()
+
+        if (isAdmin) {
+          showDashboard()
+          loadArticles()
+        } else {
+          alert('Acesso negado. Você não é administrador.')
+          await window.supabase.auth.signOut()
+        }
+      }
+    }
+
+    window.logout = async () => {
+      await window.supabase.auth.signOut()
+      session = null
+      document.getElementById('dashboard').classList.add('hidden')
+      document.getElementById('new-article').classList.add('hidden')
+      document.getElementById('login-screen').classList.remove('hidden')
+    }
+
+    window.showDashboard = () => {
+      document.getElementById('login-screen').classList.add('hidden')
+      document.getElementById('new-article').classList.add('hidden')
+      document.getElementById('dashboard').classList.remove('hidden')
+    }
+
+    window.showNewArticle = () => {
+      document.getElementById('dashboard').classList.add('hidden')
+      document.getElementById('new-article').classList.remove('hidden')
+      document.getElementById('generate-section').classList.remove('hidden')
+      document.getElementById('edit-section').classList.add('hidden')
+    }
+
+    checkSession()
+
+    async function loadArticles() {
+      const { data, error } = await window.supabase
+        .from('articles')
+        .select('*')
+        .order('created_at', { ascending: false })
+
+      if (error) {
+        console.error('Error loading articles:', error)
+        document.getElementById('articles-list').innerHTML = '<p class="text-red-400">Erro ao carregar artigos</p>'
+      } else {
+        renderArticles(data || [])
+      }
+    }
+
+    function renderArticles(articles) {
+      const container = document.getElementById('articles-list')
+
+      if (articles.length === 0) {
+        container.innerHTML = '<div class="text-center py-12 text-gray-400">Nenhum artigo encontrado</div>'
+        return
+      }
+
+      container.innerHTML = articles.map(article => `
+        <div class="bg-slate-800 p-4 rounded border border-slate-700">
+          <div class="flex justify-between items-start">
+            <div class="flex-1">
+              <h3 class="font-semibold text-lg">${article.title}</h3>
+              <p class="text-gray-400 text-sm mt-1">${article.category}</p>
+              <div class="flex items-center gap-2 mt-2">
+                <span class="text-xs px-2 py-1 rounded ${article.status === 'published' ? 'bg-green-600' : 'bg-yellow-600'}">
+                  ${article.status === 'published' ? 'Publicado' : 'Rascunho'}
+                </span>
+                ${article.published_at ? `<span class="text-gray-400 text-xs">${new Date(article.published_at).toLocaleDateString('pt-BR')}</span>` : ''}
+              </div>
+            </div>
+            <div class="flex gap-2 ml-4">
+              <button onclick="deleteArticle('${article.id}')" class="text-red-400 hover:text-red-300">Excluir</button>
+            </div>
+          </div>
+        </div>
+      `).join('')
+    }
+
+    window.generateArticle = async () => {
+      const subject = document.getElementById('subject').value
+      const category = document.getElementById('category').value
+
+      if (!subject || !category) {
+        alert('Preencha o assunto e a categoria')
+        return
+      }
+
+      // Get current session before API call
+      const { data: { session: currentSession } } = await window.supabase.auth.getSession()
+      if (!currentSession) {
+        alert('Sessão expirada. Faça login novamente.')
+        session = null
+        document.getElementById('dashboard').classList.add('hidden')
+        document.getElementById('new-article').classList.add('hidden')
+        document.getElementById('login-screen').classList.remove('hidden')
+        return
+      }
+      session = currentSession
+
+      const btn = document.getElementById('generate-btn')
+      btn.disabled = true
+      btn.textContent = 'Gerando...'
+
+      try {
+        const response = await fetch('/api/generate-article', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${session.access_token}`
+          },
+          body: JSON.stringify({ subject, category })
+        })
+
+        const data = await response.json()
+
+        if (response.ok) {
+          document.getElementById('title').value = data.title
+          document.getElementById('slug').value = data.slug
+          document.getElementById('excerpt').value = data.excerpt
+          document.getElementById('content').value = data.content
+          document.getElementById('seo_title').value = data.seo_title
+          document.getElementById('seo_description').value = data.seo_description
+          updateCounts()
+
+          document.getElementById('generate-section').classList.add('hidden')
+          document.getElementById('edit-section').classList.remove('hidden')
+        } else {
+          alert('Erro ao gerar artigo: ' + (data.error || 'Erro desconhecido'))
+        }
+      } catch (error) {
+        alert('Erro ao gerar artigo: ' + error.message)
+      } finally {
+        btn.disabled = false
+        btn.textContent = 'Gerar com IA'
+      }
+    }
+
+    window.saveArticle = async (status) => {
+      const slug = document.getElementById('slug').value
+
+      if (!/^[a-z0-9-]+$/.test(slug)) {
+        alert('Slug inválido. Use apenas letras minúsculas, números e hífens.')
+        return
+      }
+
+      const articleData = {
+        title: document.getElementById('title').value,
+        slug: slug,
+        excerpt: document.getElementById('excerpt').value,
+        content: document.getElementById('content').value,
+        category: document.getElementById('category').value,
+        seo_title: document.getElementById('seo_title').value,
+        seo_description: document.getElementById('seo_description').value,
+        status,
+        published_at: status === 'published' ? new Date().toISOString() : null
+      }
+
+      const btn = status === 'published' ? document.getElementById('publish-btn') : document.getElementById('save-draft-btn')
+      btn.disabled = true
+      btn.textContent = status === 'published' ? 'Publicando...' : 'Salvando...'
+
+      try {
+        const { error } = await window.supabase.from('articles').insert(articleData)
+
+        if (error) {
+          if (error.code === '23505') {
+            alert('Já existe um artigo com este endereço (slug). Escolha outro.')
+          } else {
+            alert('Erro ao salvar: ' + error.message)
+          }
+        } else {
+          alert(status === 'published' ? 'Artigo publicado!' : 'Rascunho salvo!')
+          showDashboard()
+          loadArticles()
+        }
+      } catch (error) {
+        alert('Erro ao salvar: ' + error.message)
+      } finally {
+        btn.disabled = false
+        btn.textContent = status === 'published' ? 'Publicar' : 'Salvar Rascunho'
+      }
+    }
+
+    window.deleteArticle = async (id) => {
+      if (!confirm('Tem certeza que deseja excluir este artigo?')) return
+
+      const { error } = await window.supabase.from('articles').delete().eq('id', id)
+
+      if (error) {
+        alert('Erro ao excluir artigo')
+      } else {
+        loadArticles()
+      }
+    }
+
+    function updateCounts() {
+      document.getElementById('seo_title_count').textContent = document.getElementById('seo_title').value.length
+      document.getElementById('seo_description_count').textContent = document.getElementById('seo_description').value.length
+    }
+
+    document.getElementById('seo_title').addEventListener('input', updateCounts)
+    document.getElementById('seo_description').addEventListener('input', updateCounts)
+
+    checkSession()
+  </script>
+</body>
+</html>

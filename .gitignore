@@ -17,6 +17,13 @@ dist-ssr
 .env.local
 .env.*.local
 
+# Generated admin HTML (contains credentials)
+public/admin/index.html
+dist/admin/index.html
+
+# Development cache (contains credentials)
+.dev-cache
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

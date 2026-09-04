@@ -12,6 +12,18 @@ export default defineConfig({
     },
   },
   server: {
-    proxy: { '/api': { target: 'http://localhost:3001', changeOrigin: true } }
+    proxy: {
+      '/api': { target: 'http://localhost:3001', changeOrigin: true },
+      '/conteudos': {
+        target: 'http://localhost:3001',
+        changeOrigin: true,
+        bypass: (req, res, options) => {
+          // Bypass proxy (servir do Vite) para /conteudos/ ou /conteudos (índice)
+          if (req.url === '/conteudos/' || req.url === '/conteudos') {
+            return '/conteudos/index.html'
+          }
+        }
+      }
+    }
   }
 })
