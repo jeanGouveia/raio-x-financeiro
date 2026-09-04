@@ -1,5 +1,4 @@
 import { createClient } from '@supabase/supabase-js'
-import DOMPurify from 'dompurify'
 
 const supabaseUrl = process.env.SUPABASE_URL
 const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_ANON_KEY
@@ -11,6 +10,20 @@ if (!supabaseUrl || !supabaseKey) {
 const supabase = supabaseUrl && supabaseKey
   ? createClient(supabaseUrl, supabaseKey)
   : null
+
+// Fallback sanitization using regex (safe for basic use)
+function sanitizeHTML(html) {
+  return html
+    .replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '')
+    .replace(/<iframe\b[^<]*(?:(?!<\/iframe>)<[^<]*)*<\/iframe>/gi, '')
+    .replace(/<object\b[^<]*(?:(?!<\/object>)<[^<]*)*<\/object>/gi, '')
+    .replace(/<embed\b[^<]*(?:(?!<\/embed>)<[^<]*)*<\/embed>/gi, '')
+    .replace(/on\w+="[^"]*"/gi, '')
+    .replace(/on\w+='[^']*'/gi, '')
+    .replace(/javascript:/gi, '')
+    .replace(/vbscript:/gi, '')
+    .replace(/data:[^;]*script/gi, '')
+}
 
 export default async function handler(req, res) {
   // Vercel provides query params in req.query
@@ -36,13 +49,7 @@ export default async function handler(req, res) {
       return res.status(404).json({ error: 'Article not found' })
     }
 
-    const sanitizedContent = DOMPurify.sanitize(data.content, {
-      ALLOWED_TAGS: ['p', 'br', 'strong', 'em', 'u', 'a', 'ul', 'ol', 'li', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'blockquote', 'code', 'pre'],
-      ALLOWED_ATTR: ['href', 'title', 'target'],
-      ALLOW_DATA_ATTR: false,
-      FORBID_TAGS: ['script', 'iframe', 'object', 'embed', 'form', 'input', 'button'],
-      FORBID_ATTR: ['onerror', 'onload', 'onclick', 'onmouseover', 'onfocus', 'onblur', 'onchange', 'onsubmit']
-    })
+    const sanitizedContent = sanitizeHTML(data.content)
 
     const html = `<!DOCTYPE html>
 <html lang="pt-BR">
