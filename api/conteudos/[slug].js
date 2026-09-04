@@ -13,6 +13,7 @@ const supabase = supabaseUrl && supabaseAnonKey
   : null
 
 export default async function handler(req, res) {
+  // Vercel provides query params in req.query
   const { slug } = req.query
 
   if (!slug) {
@@ -162,6 +163,6 @@ export default async function handler(req, res) {
 
   } catch (error) {
     console.error('Error fetching article:', error)
-    return res.status(500).json({ error: 'Internal server error' })
+    return res.status(500).json({ error: 'Internal server error', message: error.message })
   }
 }
