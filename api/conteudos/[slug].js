@@ -1,4 +1,6 @@
 import { createClient } from '@supabase/supabase-js'
+import { JSDOM } from 'jsdom'
+import createDOMPurify from 'dompurify'
 
 const supabaseUrl = process.env.SUPABASE_URL
 const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_ANON_KEY
@@ -11,18 +13,22 @@ const supabase = supabaseUrl && supabaseKey
   ? createClient(supabaseUrl, supabaseKey)
   : null
 
-// Fallback sanitization using regex (safe for basic use)
+// Create DOMPurify instance with jsdom for Node.js environment
+const window = new JSDOM('').window
+const DOMPurify = createDOMPurify(window)
+
+// Sanitize HTML with DOMPurify
 function sanitizeHTML(html) {
-  return html
-    .replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '')
-    .replace(/<iframe\b[^<]*(?:(?!<\/iframe>)<[^<]*)*<\/iframe>/gi, '')
-    .replace(/<object\b[^<]*(?:(?!<\/object>)<[^<]*)*<\/object>/gi, '')
-    .replace(/<embed\b[^<]*(?:(?!<\/embed>)<[^<]*)*<\/embed>/gi, '')
-    .replace(/on\w+="[^"]*"/gi, '')
-    .replace(/on\w+='[^']*'/gi, '')
-    .replace(/javascript:/gi, '')
-    .replace(/vbscript:/gi, '')
-    .replace(/data:[^;]*script/gi, '')
+  return DOMPurify.sanitize(html, {
+    ALLOWED_TAGS: ['p', 'br', 'strong', 'em', 'u', 'a', 'ul', 'ol', 'li', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'blockquote', 'code', 'pre', 'span', 'div'],
+    ALLOWED_ATTR: ['href', 'title', 'target', 'class', 'id'],
+    ALLOW_DATA_ATTR: false,
+    FORBID_TAGS: ['script', 'iframe', 'object', 'embed', 'form', 'input', 'button', 'svg', 'math'],
+    FORBID_ATTR: ['onerror', 'onload', 'onclick', 'onmouseover', 'onfocus', 'onblur', 'onchange', 'onsubmit', 'ondblclick', 'onmousedown', 'onmouseup', 'onmousemove', 'onmouseout', 'onkeypress', 'onkeydown', 'onkeyup'],
+    FORBID_CSS: new RegExp('expression\\(', 'i'),
+    SANITIZE_DOM: true,
+    KEEP_CONTENT: true
+  })
 }
 
 export default async function handler(req, res) {
